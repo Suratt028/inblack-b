@@ -4,3 +4,11 @@ _บันทึกเฉพาะเหตุการณ์จริง_
 ## 2026-11-18 — ขั้น 1–2 ตีกลับโดย code-reviewer (รอบ 1)
 - ปัญหา: `scripts/verify-claims.js` `checkClaim` เช็กแค่ว่า "มีตัวเลขอย่างน้อยหนึ่งตัว" ใน `statement_th` ตรงกับ `value` → ตัวเลขแต่งเพิ่มในประโยคเดียวกันหลุดได้ ผู้ตรวจทดลองกับไฟล์จริง `data/raw/2026-11-18/game-202350.json` `/deals/0/price`: "ราคา 59.99 ลด 99%" ได้ `ok: true`
 - แก้: ทุกตัวเลขใน `statement_th` ต้องตรงกับ `value` ของ claim ที่ผ่านในเกมเดียวกัน ไม่งั้นตีกลับ claim นั้น + เทสต์ `a statement with one backed and one unbacked number is rejected`
+
+## 2026-11-18 — ขั้น 3 `data/brief.json` (deal-analyst) ตีกลับโดย evidence-reviewer (ขั้น 4 รอบ 1)
+- ใช้ skill `verify-deal-claim`: claim ตัวเลข 35/35 ตรงไฟล์ดิบ, verdict 5/5 ตรงสูตร — แต่ **`summary_th` 4 ใน 5 เกมตีความเกินข้อมูล** (สคริปต์ตรวจไม่ได้ ผู้ตรวจอ่านเอง):
+  - Cyberpunk 2077: "ดีลที่ถูกที่สุดคือ Humble Store" — จริง ๆ 3 ร้านราคาเท่ากัน 59.99 และ CheapShark เองชี้ Steam
+  - Hades: "มีขายที่ Steam ร้านเดียว" (จริง ๆ คือร้านเดียวที่ CheapShark ติดตาม) และอธิบาย skip ด้วยเหตุผลของ wait ("ควรรอโปร")
+  - Stardew Valley: "ถูกที่สุดคือ GOG" (เสมอกับ Steam) และ "ราคาเก่ามาก" ไม่มี claim วันที่รองรับ
+  - Baldur's Gate 3: "ถูกที่สุดคือ GOG" (เสมอกับ Steam), "ไม่ห่างจากตอนนี้มาก" ผิด (ต่ำสุดถูกกว่า 30%), "รอโปรรอบหน้า" เดาเอง
+- ร่างที่ถูกตีกลับเก็บไว้ที่ `data/brief.rejected-1.json` · ผลตรวจเต็ม `AGENT_LOG/runs/step4-evidence-review-1.md` · ส่งกลับให้ deal-analyst แก้
