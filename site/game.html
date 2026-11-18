@@ -25,7 +25,6 @@ const FACTORS = [
 function chart(g) {
   const W = 640, H = 220, L = 64, R = 16, T = 16, B = 34;
   const pts = g.history.filter((h) => !h.missing);
-  const fx = g.inputs.fx.value;
   const ys = pts.map((h) => h.priceTHB).concat([g.retailTHB, g.cheapestEverTHB]);
   const max = Math.max(...ys) * 1.08, min = Math.min(0, ...ys);
   const x = (i) => (pts.length === 1 ? L + (W - L - R) / 2 : L + i * (W - L - R) / (pts.length - 1));
@@ -39,11 +38,11 @@ function chart(g) {
   s += `<text x="${W - R}" y="${y(g.cheapestEverTHB) - 5}" text-anchor="end" style="fill:var(--ok)">ต่ำสุดที่เคยมี ${thb(g.cheapestEverTHB)}</text>`;
   if (pts.length > 1) s += `<polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="${pts.map((h, i) => `${x(i)},${y(h.priceTHB)}`).join(' ')}"/>`;
   pts.forEach((h, i) => {
-    s += `<circle cx="${x(i)}" cy="${y(h.priceTHB)}" r="5" fill="var(--accent)"><title>${h.day}: ${thb(h.priceTHB)} บาท</title></circle>`;
-    s += `<text x="${x(i)}" y="${H - 12}" text-anchor="middle">${h.day}</text>`;
+    s += `<circle cx="${x(i)}" cy="${y(h.priceTHB)}" r="5" fill="var(--accent)"><title>${esc(h.day)}: ${thb(h.priceTHB)} บาท</title></circle>`;
+    s += `<text x="${x(i)}" y="${H - 12}" text-anchor="middle">${esc(h.day)}</text>`;
     s += `<text x="${x(i)}" y="${y(h.priceTHB) - 9}" text-anchor="middle" style="fill:var(--accent)">${thb(h.priceTHB)}</text>`;
   });
-  return s + '</svg>' + (fx ? '' : '');
+  return s + '</svg>';
 }
 
 loadData().then((d) => {
@@ -69,12 +68,12 @@ loadData().then((d) => {
     </table></div>
 
     <h2>ราคาแต่ละร้าน (บาท)</h2>
-    <p class="small muted">1 USD = ${g.inputs.fx.value} บาท (อัตราของวันที่ ${esc(g.fxDate)}) ${src(g.inputs.fx)}</p>
+    <p class="small muted">1 USD = ${esc(g.inputs.fx.value)} บาท (อัตราของวันที่ ${esc(g.fxDate)}) ${src(g.inputs.fx)}</p>
     <div class="table-scroll"><table>
       <tr><th>ร้าน</th><th class="num">ราคา (บาท)</th><th class="num">USD</th><th class="num">ราคาปกติ USD</th><th class="num">ลด</th><th>ซื้อ</th></tr>
       ${stores.map((s) => `<tr><td>${esc(s.storeName)}${s.storeActive ? '' : ' <span class="bad small">(ร้านปิด)</span>'}<br>${src(s.source)}</td>
         <td class="num"><strong>${thb(s.thb)}</strong></td><td class="num">${usd(s.price)}</td><td class="num">${usd(s.retailPrice)}</td>
-        <td class="num">${s.savings}%</td><td><a href="${esc(s.link)}" rel="nofollow noopener" target="_blank">ไปที่ร้าน (CheapShark)</a></td></tr>`).join('')}
+        <td class="num">${esc(s.savings)}%</td><td><a href="${esc(s.link)}" rel="nofollow noopener" target="_blank">ไปที่ร้าน (CheapShark)</a></td></tr>`).join('')}
     </table></div>
 
     <h2>กราฟราคา (บาท)</h2>
