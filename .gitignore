@@ -5,3 +5,4 @@ node_modules/
 *.bundle
 site/data/
 _site/
+.claude/launch.json
