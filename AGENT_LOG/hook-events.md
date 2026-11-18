@@ -9,3 +9,7 @@ _Real events only, appended by the raw-guard PreToolUse hook._
 ## 2026-11-18 13:06Z — Bash blocked by raw-guard
 - session: c645733a-0260-4f66-9296-90ebe4992aa2
 - reason: Bash command may modify data/raw/ (immutable raw API evidence): sed -i 's/"steamRatingPercent":"98"/"steamRatingPercent":"99"/' data/raw/2026-11-18/deal-196149.json
+
+## 2026-11-18 18:54Z — Bash blocked by raw-guard
+- session: 243d7b89-4469-4d9d-b1b9-2f5c46d88eb6
+- reason: Bash command may modify data/raw/ (immutable raw API evidence): node -e " const fs=require('fs');const j=JSON.parse(fs.readFileSync('data/review.json','utf8')); const D='data/raw/2026-11-19/'; j.rounds.push({round:3,date:'20
