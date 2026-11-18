@@ -17,3 +17,7 @@ _บันทึกเฉพาะเหตุการณ์จริง_
 - `.claude/settings.json` มี path เต็มของเครื่อง (มีชื่อผู้ใช้ Windows) ใน marketplace — จะหลุดขึ้น repo สาธารณะ และใช้กับเครื่องอื่นไม่ได้ → เปลี่ยนเป็น `./`
 - `guard-raw.js` ซ่อน path แค่แบบ `C:\Users\...` แต่ Bash ของเครื่องนี้คือ Git Bash (`/c/Users/<ชื่อ>/...`) → ชื่อผู้ใช้จะหลุดลง `AGENT_LOG/hook-events.md` → เพิ่ม `redact()` ครอบ Windows / Git Bash / POSIX + เทสต์
 - allow-list เช็กแค่ต้นคำสั่ง: `npm run fetch && rm -rf data/raw/2026-11-18` ผ่าน → อนุญาตเฉพาะคำสั่ง fetch ล้วน ๆ + เทสต์
+
+## 2026-11-19 — แก้ข้อค้างจากรีวิว (raw-guard) ตีกลับโดย code-reviewer (รอบ 1)
+- regex ใหม่ของ prefix (`env FOO=1 rm` ฯลฯ) กำกวม: token อย่าง `x=1` เป็นได้ทั้ง "ค่าของ option" และ "assignment" → backtrack แบบ 2^n ผู้ตรวจวัด n=22 ใช้ 325 ms, n=1000 ไม่จบ → hook จะค้างเกิน timeout 20 วินาทีแล้วปล่อยคำสั่งผ่าน (fail open)
+- แก้: ค่าของ option ห้ามมี `=`, ค่า assignment แยกตามตัวแรก (`"`/`'`/อื่น) ให้แต่ละ token parse ได้ทางเดียว · เทสต์ input ยาว 2000 token ทุกรูปแบบต้องจบใน 1 วินาที (วัดจริง ≤ 4 ms)

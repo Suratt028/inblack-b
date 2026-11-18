@@ -5,3 +5,4 @@ _บันทึกเฉพาะเหตุการณ์จริง_
 2. 2026-11-18 — ผู้ใช้: "Try again" (รันขั้น 4 ใหม่หลังโควตาหมด)
 3. 2026-11-18 — ผู้ใช้สร้าง repo `Suratt028/inblack-b` แล้วสั่ง "Merge, push, enable Pages" (รวม Initial commit ของ GitHub โดยใช้ README ของเรา, push, เปิด Pages แบบ GitHub Actions)
 4. 2026-11-18 — ผู้ใช้: "Draft it" (ให้ร่าง DECISIONS.md จากเหตุการณ์จริง) แล้ว "Approve and push" (อนุมัติร่างตามนั้น)
+5. 2026-11-18/19 — ผู้ใช้: "รีวิวโค้ด เปรียบเทียบ เหลืออะไรอีก" → "Fix them now" (แก้ 3 ข้อค้าง); "Schedule it" (ตั้งเวลารันวันที่ 2 ตอน 00:15)
