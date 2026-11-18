@@ -34,6 +34,22 @@ test('formula: weights, caps and thresholds from METRICS.md', () => {
   assert.equal(verdictFor(39.99), 'skip');
 });
 
+test('non-numeric inputs stop the calculation instead of producing a wrong verdict', () => {
+  assert.throws(() => computeFactors({ savings: NaN, price: 10, cheapestEver: 5, rating: 90, ratingCount: 1 }), /savings is not a number/);
+  // analyzeGame on a copy of a real round with price = "" -> error names file + pointer
+  const os = require('os');
+  const { analyzeGame } = require('../scripts/lib/metrics');
+  const day = listDays()[0];
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'nan-'));
+  fs.cpSync(path.join(RAW_DIR, day), path.join(root, 'data', 'raw', day), { recursive: true });
+  const m = readManifest(day);
+  const gf = path.join(root, 'data', 'raw', day, m.games[0].files.game);
+  const doc = JSON.parse(fs.readFileSync(gf, 'utf8'));
+  doc.deals[m.games[0].bestDealIndex].retailPrice = '';
+  fs.writeFileSync(gf, JSON.stringify(doc));
+  assert.throws(() => analyzeGame(day, m.games[0], { root }), /\/retailPrice: retailPrice is not a number/);
+});
+
 test('bestDealIndex: cheapest numeric price, first on ties, -1 when empty', () => {
   assert.equal(bestDealIndex({ deals: [{ price: '9.99' }, { price: '10.00' }, { price: '9.99' }] }), 0);
   assert.equal(bestDealIndex({ deals: [{ price: '10.00' }, { price: '2.50' }] }), 1);

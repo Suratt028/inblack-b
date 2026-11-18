@@ -31,6 +31,9 @@ function verdictFor(score) {
 
 // Factors from plain numbers (used by tests and by analyzeGame).
 function computeFactors({ savings, price, cheapestEver, rating, ratingCount }) {
+  for (const [k, v] of Object.entries({ savings, price, cheapestEver })) {
+    if (!Number.isFinite(v)) throw new Error(`computeFactors: ${k} is not a number (${v})`);
+  }
   const F1 = r2(WEIGHTS.F1 * Math.max(0, Math.min(100, savings)) / 100);
   const F2 = r2(price <= 0 ? WEIGHTS.F2 : WEIGHTS.F2 * Math.min(1, cheapestEver / price));
   const F3 = r2(Number.isFinite(rating) && ratingCount > 0 ? WEIGHTS.F3 * rating / 100 : 0);
