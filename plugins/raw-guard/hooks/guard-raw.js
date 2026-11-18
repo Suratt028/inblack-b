@@ -14,11 +14,21 @@ const RAW_RE = /data[\\/]+raw(?:[\\/]|$|[\s"'`;&|)])/i;
 // a redirect whose target is inside data/raw (fd redirects like 2>/dev/null to elsewhere are fine)
 const REDIRECT_RE = /(^|[^\d&<>=!])>{1,2}\s*["']?[^\s"';&|]*data[\\/]+raw/i;
 // write/delete commands only in command position (start, or after ; & | ( or `), so `grep copy data/raw/x` is a read
-const CMD_RE = /((?:^|[;&|(`\n])\s*|\b(?:sudo|xargs|time|env|nice|command)\s+)(rm|rmdir|mv|cp|tee|truncate|touch|dd|install|unlink|shred|del|erase|ren|move|copy)\b/i;
-const OTHER_WRITE_RE = /\bfind\b[^;&|]*\s-(delete|exec)\b|\bsed\s+(-[a-z]*i|--in-place)|\bperl\s+-[a-z]*i|\b(Remove-Item|Set-Content|Add-Content|Out-File|Move-Item|Copy-Item|Rename-Item|Clear-Content|New-Item)\b|\bgit\s+(checkout|restore|rm|mv|clean|reset|stash)\b|writeFile|appendFile|unlinkSync|rmSync|renameSync|copyFileSync|open\([^)]*['"][wa]/i;
+const WRITE_CMDS = 'rm|rmdir|mv|cp|tee|truncate|touch|dd|install|unlink|shred|chmod|del|erase|ren|move|copy';
+// prefixes may carry options and assignments: `env FOO=1 rm`, `env FOO="a b" rm`, `nice -n 5 rm`, `sudo -u x rm`,
+// `timeout 5 rm`, `nohup rm`. An option argument never contains "=", so it can't also match an assignment —
+// that keeps the repetition unambiguous (no exponential backtracking on long inputs; see the regression test).
+// value alternatives start with different characters (", ', other), so each token has exactly one parse
+const ASSIGN = `(?:\\w+=(?:"[^"]*"|'[^']*'|[^\\s"']\\S*)?|'\\w+=[^']*')`;
+const PREFIX = `(?:\\b(?:sudo|doas|xargs|time|env|nice|nohup|stdbuf|command|busybox)(?:\\s+(?:-\\S+(?:\\s+[^\\s=-][^\\s=]*)?|${ASSIGN}))*\\s+|\\btimeout(?:\\s+-\\S+)*\\s+\\S+\\s+)`;
+const CMD_RE = new RegExp(`((?:^|[;&|(\`\\n])\\s*|${PREFIX})(?:\\S*/)?(${WRITE_CMDS})\\b`, 'i');
+// find: -delete, or -exec/-execdir/-ok/-okdir running a write command or a shell (`find data/raw -exec cat {} \;` is a
+// read). `\;` between several -exec clauses does not end the find command.
+const FIND_RE = new RegExp(`\\bfind\\b(?:[^;&|]|\\\\;)*\\s-(?:delete\\b|(?:exec|execdir|ok|okdir)\\s+(?:\\S*/)?(?:${WRITE_CMDS}|sh|bash|sed\\s+-[a-z]*i)\\b)`, 'i');
+const OTHER_WRITE_RE = /\bsed\s+(-[a-z]*i|--in-place)|\bperl\s+-[a-z]*i|\b(Remove-Item|Set-Content|Add-Content|Out-File|Move-Item|Copy-Item|Rename-Item|Clear-Content|New-Item)\b|\bgit\s+(checkout|restore|rm|mv|clean|reset|stash)\b|writeFile|appendFile|unlinkSync|rmSync|renameSync|copyFileSync|open\([^)]*['"][wa]/i;
 // only the bare fetch command is allowed; anything chained (; & | newline backtick $( ) is checked like any command
 const ALLOWED_RE = /^\s*(node\s+(\.[\\/])?scripts[\\/]fetch-raw\.js|npm\s+run\s+fetch)\s*$/;
-const isWrite = (cmd) => REDIRECT_RE.test(cmd) || CMD_RE.test(cmd) || OTHER_WRITE_RE.test(cmd);
+const isWrite = (cmd) => REDIRECT_RE.test(cmd) || CMD_RE.test(cmd) || FIND_RE.test(cmd) || OTHER_WRITE_RE.test(cmd);
 
 // Strip absolute local paths (Windows, Git Bash /c/Users/..., Linux/mac home) so logs never contain a username.
 function redact(cmd, root) {

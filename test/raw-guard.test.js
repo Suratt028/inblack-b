@@ -45,14 +45,46 @@ test('shell: block writes/deletes touching data/raw, allow reads and npm run fet
     'time rm data/raw/x',
     'env rm data/raw/x',
     'find data/raw -name "*.json" -delete',
+    'env FOO=1 rm data/raw/x',
+    'nice -n 5 rm data/raw/x',
+    'sudo -u someone rm data/raw/x',
+    'busybox rm data/raw/x',
+    'find data/raw -exec rm {} \\;',
+    'timeout 5 rm data/raw/x',
+    'nohup rm data/raw/x',
+    'doas rm data/raw/x',
+    'stdbuf -o0 rm data/raw/x',
+    'env FOO="a b" rm data/raw/x',
+    "env 'FOO=1' rm data/raw/x",
+    'sudo /bin/rm data/raw/x',
+    'find data/raw -exec /bin/rm {} \\;',
+    'find data/raw -exec sh -c "rm $1" _ {} \\;',
+    'find data/raw -ok rm {} \\;',
+    'find data/raw -exec cat {} \\; -exec rm {} \\;',
   ]) assert.ok(call('Bash', { command: cmd }), cmd);
   // chained after the allowed fetch command -> still checked
   for (const cmd of ['npm run fetch && rm -rf data/raw/2026-11-18', 'node scripts/fetch-raw.js ; echo 1 > data/raw/x.json', 'npm run fetch\nrm data/raw/x']) {
     assert.ok(call('Bash', { command: cmd }), cmd);
   }
   for (const cmd of ['cat data/raw/2026-11-18/stores.json', 'ls data/raw', 'node scripts/fetch-raw.js', 'npm run fetch', 'git diff -- data/raw',
-    'ls data/raw 2>/dev/null', 'cat data/raw/2026-11-18/stores.json > /tmp/x.json', 'grep -n copy data/raw/2026-11-18/stores.json', 'ls data/raw-old']) {
+    'ls data/raw 2>/dev/null', 'cat data/raw/2026-11-18/stores.json > /tmp/x.json', 'grep -n copy data/raw/2026-11-18/stores.json', 'ls data/raw-old', 'find data/raw -exec cat {} \\;', 'find data/raw -name "*.json"']) {
     assert.equal(call('Bash', { command: cmd }), null, cmd);
+  }
+});
+
+test('long inputs are decided quickly (no catastrophic regex backtracking)', () => {
+  for (const cmd of [
+    'env ' + '-a x=1 '.repeat(2000) + 'cat data/raw/x',
+    'nice ' + '-n 5 '.repeat(2000) + 'cat data/raw/x',
+    'find data/raw ' + '-name x '.repeat(2000) + '-exec cat {} \\;',
+    'sudo ' + 'A=1 '.repeat(2000) + 'cat data/raw/x',
+    'env ' + '-a A="x" '.repeat(2000) + 'cat data/raw/x',
+    'env ' + "A='x' ".repeat(2000) + 'cat data/raw/x',
+    'timeout ' + '-k '.repeat(2000) + '5 cat data/raw/x',
+  ]) {
+    const t0 = Date.now();
+    assert.equal(call('Bash', { command: cmd }), null);
+    assert.ok(Date.now() - t0 < 1000, `took ${Date.now() - t0} ms: ${cmd.slice(0, 40)}…`);
   }
 });
 
