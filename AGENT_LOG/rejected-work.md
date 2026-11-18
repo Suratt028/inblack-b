@@ -12,3 +12,8 @@ _บันทึกเฉพาะเหตุการณ์จริง_
   - Stardew Valley: "ถูกที่สุดคือ GOG" (เสมอกับ Steam) และ "ราคาเก่ามาก" ไม่มี claim วันที่รองรับ
   - Baldur's Gate 3: "ถูกที่สุดคือ GOG" (เสมอกับ Steam), "ไม่ห่างจากตอนนี้มาก" ผิด (ต่ำสุดถูกกว่า 30%), "รอโปรรอบหน้า" เดาเอง
 - ร่างที่ถูกตีกลับเก็บไว้ที่ `data/brief.rejected-1.json` · ผลตรวจเต็ม `AGENT_LOG/runs/step4-evidence-review-1.md` · ส่งกลับให้ deal-analyst แก้
+
+## 2026-11-18 — ขั้น 5 (MCP + plugin) ตีกลับโดย code-reviewer (รอบ 1)
+- `.claude/settings.json` มี path เต็มของเครื่อง (มีชื่อผู้ใช้ Windows) ใน marketplace — จะหลุดขึ้น repo สาธารณะ และใช้กับเครื่องอื่นไม่ได้ → เปลี่ยนเป็น `./`
+- `guard-raw.js` ซ่อน path แค่แบบ `C:\Users\...` แต่ Bash ของเครื่องนี้คือ Git Bash (`/c/Users/<ชื่อ>/...`) → ชื่อผู้ใช้จะหลุดลง `AGENT_LOG/hook-events.md` → เพิ่ม `redact()` ครอบ Windows / Git Bash / POSIX + เทสต์
+- allow-list เช็กแค่ต้นคำสั่ง: `npm run fetch && rm -rf data/raw/2026-11-18` ผ่าน → อนุญาตเฉพาะคำสั่ง fetch ล้วน ๆ + เทสต์

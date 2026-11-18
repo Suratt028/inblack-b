@@ -1,0 +1,7 @@
+{"ts":"2026-11-18T13:03:59.197Z","event":"listening","url":"http://localhost:3000/mcp","tools":["compare_game_prices","explain_verdict"]}
+{"ts":"2026-11-18T13:04:26.735Z","tool":"explain_verdict","args":{"game":"hades"},"duration_ms":6,"ok":true}
+{"ts":"2026-11-18T13:04:27.098Z","tool":"compare_game_prices","args":{"game":"hades"},"duration_ms":3,"ok":true}
+{"ts":"2026-11-18T13:04:27.390Z","tool":"explain_verdict","args":{"game":"cities"},"duration_ms":3,"ok":true}
+{"ts":"2026-11-18T13:04:32.011Z","tool":"explain_verdict","args":{"game":"cyberpunk"},"duration_ms":2,"ok":true}
+{"ts":"2026-11-18T13:04:32.254Z","tool":"explain_verdict","args":{"game":"stardew"},"duration_ms":1,"ok":true}
+{"ts":"2026-11-18T13:04:32.504Z","tool":"explain_verdict","args":{"game":"baldur"},"duration_ms":2,"ok":true}
