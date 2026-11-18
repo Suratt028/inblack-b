@@ -1,0 +1,72 @@
+[
+  {
+    "game_id": "202350",
+    "verdict": "skip",
+    "summary_th": "Cyberpunk 2077 ยังไม่ลดราคา (ส่วนลด 0%) ดีลที่ถูกที่สุดคือ Humble Store ราคา 59.99 ดอลลาร์ เท่ากับราคาปกติ 59.99 ดอลลาร์ ขณะที่ราคาต่ำสุดที่เคยมีคือ 17.99 ดอลลาร์ ถูกกว่าตอนนี้มาก แม้รีวิว Steam จะดี (89% จาก 403071 รีวิว) ตามสูตรจึงแนะนำว่ายังไม่ควรซื้อตอนนี้",
+    "claims": [
+      { "statement_th": "ส่วนลดของดีลที่ถูกที่สุดคือ 0%", "value": 0, "source": { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/0/savings" } },
+      { "statement_th": "ราคาตอนนี้ (ดีลที่ถูกที่สุด) 59.99 ดอลลาร์", "value": 59.99, "source": { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/0/price" } },
+      { "statement_th": "ราคาปกติ 59.99 ดอลลาร์", "value": 59.99, "source": { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/0/retailPrice" } },
+      { "statement_th": "ราคาต่ำสุดที่เคยมี 17.99 ดอลลาร์", "value": 17.99, "source": { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/cheapestPriceEver/price" } },
+      { "statement_th": "คะแนนรีวิว Steam เป็นบวก 89%", "value": 89, "source": { "file": "data/raw/2026-11-18/deal-202350.json", "pointer": "/gameInfo/steamRatingPercent" } },
+      { "statement_th": "จำนวนรีวิว Steam 403071 รีวิว", "value": 403071, "source": { "file": "data/raw/2026-11-18/deal-202350.json", "pointer": "/gameInfo/steamRatingCount" } },
+      { "statement_th": "อัตราแลกเปลี่ยน 33.84 บาทต่อดอลลาร์", "value": 33.84, "source": { "file": "data/raw/2026-11-18/fx-usd-thb.json", "pointer": "/rates/THB" } }
+    ]
+  },
+  {
+    "game_id": "196149",
+    "verdict": "skip",
+    "summary_th": "Hades มีขายที่ Steam ร้านเดียวในรอบนี้ และไม่ลดราคา (ส่วนลด 0%) ราคาตอนนี้ 24.99 ดอลลาร์ เท่ากับราคาปกติ 24.99 ดอลลาร์ แต่ราคาต่ำสุดที่เคยมีคือ 6.24 ดอลลาร์ เกมได้รีวิว Steam สูงมาก (98% จาก 143406 รีวิว) แต่ตามสูตรควรรอโปรมากกว่าซื้อราคาเต็มตอนนี้ จึงได้ผลว่าไม่ซื้อ",
+    "claims": [
+      { "statement_th": "ส่วนลดของดีลที่ถูกที่สุดคือ 0%", "value": 0, "source": { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals/0/savings" } },
+      { "statement_th": "ราคาตอนนี้ (ดีลที่ถูกที่สุด) 24.99 ดอลลาร์", "value": 24.99, "source": { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals/0/price" } },
+      { "statement_th": "ราคาปกติ 24.99 ดอลลาร์", "value": 24.99, "source": { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals/0/retailPrice" } },
+      { "statement_th": "ราคาต่ำสุดที่เคยมี 6.24 ดอลลาร์", "value": 6.24, "source": { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/cheapestPriceEver/price" } },
+      { "statement_th": "คะแนนรีวิว Steam เป็นบวก 98%", "value": 98, "source": { "file": "data/raw/2026-11-18/deal-196149.json", "pointer": "/gameInfo/steamRatingPercent" } },
+      { "statement_th": "จำนวนรีวิว Steam 143406 รีวิว", "value": 143406, "source": { "file": "data/raw/2026-11-18/deal-196149.json", "pointer": "/gameInfo/steamRatingCount" } },
+      { "statement_th": "อัตราแลกเปลี่ยน 33.84 บาทต่อดอลลาร์", "value": 33.84, "source": { "file": "data/raw/2026-11-18/fx-usd-thb.json", "pointer": "/rates/THB" } }
+    ]
+  },
+  {
+    "game_id": "150036",
+    "verdict": "skip",
+    "summary_th": "Stardew Valley ไม่ลดราคา (ส่วนลด 0%) ดีลที่ถูกที่สุดคือ GOG ราคา 14.99 ดอลลาร์ เท่ากับราคาปกติ 14.99 ดอลลาร์ ราคาต่ำสุดที่เคยมีคือ 5.99 ดอลลาร์ (เป็นราคาที่เก่ามาก) รีวิว Steam ดีเยี่ยม (98% จาก 397481 รีวิว) แต่ไม่มีส่วนลดและห่างจากราคาต่ำสุด สูตรจึงให้ผลว่าไม่ซื้อ",
+    "claims": [
+      { "statement_th": "ส่วนลดของดีลที่ถูกที่สุดคือ 0%", "value": 0, "source": { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/0/savings" } },
+      { "statement_th": "ราคาตอนนี้ (ดีลที่ถูกที่สุด) 14.99 ดอลลาร์", "value": 14.99, "source": { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/0/price" } },
+      { "statement_th": "ราคาปกติ 14.99 ดอลลาร์", "value": 14.99, "source": { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/0/retailPrice" } },
+      { "statement_th": "ราคาต่ำสุดที่เคยมี 5.99 ดอลลาร์", "value": 5.99, "source": { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/cheapestPriceEver/price" } },
+      { "statement_th": "คะแนนรีวิว Steam เป็นบวก 98%", "value": 98, "source": { "file": "data/raw/2026-11-18/deal-150036.json", "pointer": "/gameInfo/steamRatingPercent" } },
+      { "statement_th": "จำนวนรีวิว Steam 397481 รีวิว", "value": 397481, "source": { "file": "data/raw/2026-11-18/deal-150036.json", "pointer": "/gameInfo/steamRatingCount" } },
+      { "statement_th": "อัตราแลกเปลี่ยน 33.84 บาทต่อดอลลาร์", "value": 33.84, "source": { "file": "data/raw/2026-11-18/fx-usd-thb.json", "pointer": "/rates/THB" } }
+    ]
+  },
+  {
+    "game_id": "202278",
+    "verdict": "wait",
+    "summary_th": "Baldur's Gate 3 ยังไม่ลดราคา (ส่วนลด 0%) ดีลที่ถูกที่สุดคือ GOG ราคา 59.99 ดอลลาร์ เท่ากับราคาปกติ 59.99 ดอลลาร์ ราคาต่ำสุดที่เคยมีคือ 41.99 ดอลลาร์ ไม่ห่างจากตอนนี้มาก และรีวิว Steam ดีเยี่ยม (96% จาก 452525 รีวิว) ตามสูตรแนะนำให้รอโปรรอบหน้า",
+    "claims": [
+      { "statement_th": "ส่วนลดของดีลที่ถูกที่สุดคือ 0%", "value": 0, "source": { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/deals/0/savings" } },
+      { "statement_th": "ราคาตอนนี้ (ดีลที่ถูกที่สุด) 59.99 ดอลลาร์", "value": 59.99, "source": { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/deals/0/price" } },
+      { "statement_th": "ราคาปกติ 59.99 ดอลลาร์", "value": 59.99, "source": { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/deals/0/retailPrice" } },
+      { "statement_th": "ราคาต่ำสุดที่เคยมี 41.99 ดอลลาร์", "value": 41.99, "source": { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/cheapestPriceEver/price" } },
+      { "statement_th": "คะแนนรีวิว Steam เป็นบวก 96%", "value": 96, "source": { "file": "data/raw/2026-11-18/deal-202278.json", "pointer": "/gameInfo/steamRatingPercent" } },
+      { "statement_th": "จำนวนรีวิว Steam 452525 รีวิว", "value": 452525, "source": { "file": "data/raw/2026-11-18/deal-202278.json", "pointer": "/gameInfo/steamRatingCount" } },
+      { "statement_th": "อัตราแลกเปลี่ยน 33.84 บาทต่อดอลลาร์", "value": 33.84, "source": { "file": "data/raw/2026-11-18/fx-usd-thb.json", "pointer": "/rates/THB" } }
+    ]
+  },
+  {
+    "game_id": "264418",
+    "verdict": "wait",
+    "summary_th": "Cities: Skylines II ลดราคาที่ Steam ส่วนลด 30.01% เหลือ 34.99 ดอลลาร์ จากราคาปกติ 49.99 ดอลลาร์ ใกล้ราคาต่ำสุดที่เคยมี 30.75 ดอลลาร์ แต่รีวิว Steam อยู่ระดับปนกัน (58% จาก 35239 รีวิว) ตามสูตรจึงแนะนำให้รอก่อน",
+    "claims": [
+      { "statement_th": "ส่วนลดของดีลที่ถูกที่สุดคือ 30.01%", "value": 30.01, "source": { "file": "data/raw/2026-11-18/game-264418.json", "pointer": "/deals/0/savings" } },
+      { "statement_th": "ราคาตอนนี้ (ดีลที่ถูกที่สุด) 34.99 ดอลลาร์", "value": 34.99, "source": { "file": "data/raw/2026-11-18/game-264418.json", "pointer": "/deals/0/price" } },
+      { "statement_th": "ราคาปกติ 49.99 ดอลลาร์", "value": 49.99, "source": { "file": "data/raw/2026-11-18/game-264418.json", "pointer": "/deals/0/retailPrice" } },
+      { "statement_th": "ราคาต่ำสุดที่เคยมี 30.75 ดอลลาร์", "value": 30.75, "source": { "file": "data/raw/2026-11-18/game-264418.json", "pointer": "/cheapestPriceEver/price" } },
+      { "statement_th": "คะแนนรีวิว Steam เป็นบวก 58%", "value": 58, "source": { "file": "data/raw/2026-11-18/deal-264418.json", "pointer": "/gameInfo/steamRatingPercent" } },
+      { "statement_th": "จำนวนรีวิว Steam 35239 รีวิว", "value": 35239, "source": { "file": "data/raw/2026-11-18/deal-264418.json", "pointer": "/gameInfo/steamRatingCount" } },
+      { "statement_th": "อัตราแลกเปลี่ยน 33.84 บาทต่อดอลลาร์", "value": 33.84, "source": { "file": "data/raw/2026-11-18/fx-usd-thb.json", "pointer": "/rates/THB" } }
+    ]
+  }
+]
