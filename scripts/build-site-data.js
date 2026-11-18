@@ -31,7 +31,7 @@ function buildSiteData({ root = ROOT } = {}) {
       stores: g.stores, problems: g.problems,
       history: perDay.map((d) => {
         const h = d.games.find((x) => x.game_id === g.game_id);
-        return h ? { day: d.day, price: h.inputs.price.value, priceTHB: h.priceTHB, retail: h.inputs.retailPrice.value, score: h.score, verdict: h.verdict, source: src(h.inputs.price) } : { day: d.day, missing: true };
+        return h ? { day: d.day, price: h.inputs.price.value, priceTHB: h.priceTHB, retail: h.inputs.retailPrice.value, score: h.score, verdict: h.verdict, source: src(h.inputs.price), fx: h.inputs.fx.value, fxSource: src(h.inputs.fx) } : { day: d.day, missing: true };
       }),
       summary_th: b ? b.summary_th : null,
       claims: check.claims.filter((c) => c.game_id === g.game_id),

@@ -47,6 +47,18 @@ test('every game: score, verdict, factor points and THB prices equal an independ
       assert.equal(s.link, `https://www.cheapshark.com/redirect?dealID=${d.dealID}`);
     }
     assert.equal(g.history.length, site.days.length);
+    // every chart point: that day's raw price × that day's raw rate, with both sources pointing at that day's files
+    for (const h of g.history.filter((x) => !x.missing)) {
+      const dm = read(h.day, '_manifest.json');
+      const de = dm.games.find((x) => String(x.gameID) === g.game_id);
+      const ddoc = read(h.day, de.files.game);
+      const dbest = ddoc.deals.reduce((b, dd, i) => (Number(dd.price) < Number(ddoc.deals[b].price) ? i : b), 0);
+      const drate = Number(read(h.day, 'fx-usd-thb.json').rates.THB);
+      assert.equal(h.fx, drate, `${g.title} ${h.day} fx`);
+      assert.equal(h.priceTHB, r2(Number(ddoc.deals[dbest].price) * drate), `${g.title} ${h.day} priceTHB`);
+      assert.equal(h.source.file, `data/raw/${h.day}/${de.files.game}`);
+      assert.deepEqual(h.fxSource, { file: `data/raw/${h.day}/fx-usd-thb.json`, pointer: '/rates/THB' });
+    }
   }
 });
 

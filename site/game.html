@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>รายละเอียดเกม</title>
-<link rel="stylesheet" href="assets/style.css?v=3">
+<link rel="stylesheet" href="assets/style.css?v=4">
 </head>
 <body>
 <header class="top"><div class="wrap">
@@ -21,21 +21,32 @@ const FACTORS = [
   ['F3', 'คะแนนรีวิว Steam', 25, (g) => `25 × ${g.inputs.rating.value} / 100`, (g) => [g.inputs.rating]],
 ];
 
-// Price bar chart (THB, latest day): one bar per store (cheapest first, highlighted) plus reference bars for the
-// regular price and the all-time low. HTML bars, so labels stay readable at phone width.
-function chart(g, stores) {
-  const rows = stores.map((s, i) => ({ label: s.storeName, value: s.thb, kind: i === 0 || Number(s.price) === Number(stores[0].price) ? 'best' : 'store', title: `${s.storeName}: ${usd(s.price)}` }))
-    .concat([
-      { label: 'ราคาปกติ', value: g.retailTHB, kind: 'retail', title: `ราคาปกติ ${usd(g.inputs.retailPrice.value)}` },
-      { label: 'ต่ำสุดที่เคยมี', value: g.cheapestEverTHB, kind: 'low', title: `ราคาต่ำสุดที่ CheapShark เคยบันทึก ${usd(g.inputs.cheapestEver.value)}` },
-    ]);
-  const max = Math.max(...rows.map((r) => r.value)) || 1;
-  return `<div class="bars" role="img" aria-label="กราฟแท่งราคาเป็นบาทของแต่ละร้าน เทียบกับราคาปกติและราคาต่ำสุดที่เคยมี">
-    ${rows.map((r) => `<div class="bar-row ${r.kind}" title="${esc(r.title)}">
-      <span class="bar-label">${esc(r.label)}</span>
-      <span class="bar-track"><span class="bar-fill" style="width:${Math.max(1, (r.value / max) * 100).toFixed(1)}%"></span></span>
-      <span class="bar-value">${thb(r.value)}</span>
-    </div>`).join('')}
+// Price line chart (THB) as in the brief's mockup: a red line through the lowest price of each collected day, with
+// faint reference lines for the regular price and the all-time low. The SVG only draws lines (it stretches to the card
+// width; strokes and dots keep their size via vector-effect); dates and prices are HTML below, so they stay readable.
+function chart(g) {
+  const fin = (v) => v !== null && v !== undefined && v !== '' && Number.isFinite(Number(v));
+  const pts = g.history.filter((h) => !h.missing && fin(h.priceTHB));
+  const refs = [[g.retailTHB, 'line-ref'], [g.cheapestEverTHB, 'line-low']].filter(([v]) => fin(v));
+  const vals = pts.map((h) => Number(h.priceTHB)).concat(refs.map(([v]) => Number(v)));
+  if (!vals.length) return '<p class="muted small">ไม่มีข้อมูลราคาสำหรับกราฟ</p>';
+  const lo = Math.min(...vals), hi = Math.max(...vals), span = hi - lo;
+  const PAD = 6;
+  const x = (i) => (pts.length === 1 ? 50 : PAD + (i * (100 - 2 * PAD)) / (pts.length - 1));
+  const y = (v) => (span ? 4 + (1 - (Number(v) - lo) / span) * 32 : 20).toFixed(2); // flat data sits mid-height
+  const ref = ([v, cls]) => `<line class="${cls}" x1="0" x2="100" y1="${y(v)}" y2="${y(v)}" vector-effect="non-scaling-stroke"/>`;
+  const line = pts.map((h, i) => `${x(i).toFixed(2)},${y(h.priceTHB)}`).join(' ');
+  const dots = pts.map((h, i) => `<path class="line-dot" d="M${x(i).toFixed(2)} ${y(h.priceTHB)} l0 0" vector-effect="non-scaling-stroke"><title>${esc(h.day)}: ${thb(h.priceTHB)} บาท (${usd(h.price)})</title></path>`).join('');
+  // labels are positioned at the same x as their dot (end labels anchored to their edge so they never overflow)
+  const pos = (i) => (pts.length === 1 ? 'left:50%;transform:translateX(-50%);text-align:center'
+    : i === 0 ? `left:${x(i).toFixed(2)}%` : i === pts.length - 1 ? `right:${(100 - x(i)).toFixed(2)}%;text-align:right`
+      : `left:${x(i).toFixed(2)}%;transform:translateX(-50%);text-align:center`);
+  return `<div class="line-chart" role="img" aria-label="กราฟเส้นราคาต่ำสุดเป็นบาทของแต่ละวันที่เก็บข้อมูล">
+    <svg class="line-svg" viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true">
+      ${refs.map(ref).join('')}
+      ${pts.length > 1 ? `<polyline class="line-main" points="${line}" vector-effect="non-scaling-stroke"/>` : ''}${dots}
+    </svg>
+    <div class="line-labels">${pts.map((h, i) => `<span style="${pos(i)}">${esc(h.day)}<br><strong>${thb(h.priceTHB)}</strong> บาท<br>${usd(h.price)}</span>`).join('')}</div>
   </div>`;
 }
 
@@ -61,6 +72,14 @@ loadData().then((d) => {
       <tr><td><strong>รวม</strong></td><td class="num"><strong>${g.score}</strong>/100</td><td colspan="2" class="small muted">≥ ${d.formula.thresholds.buy} ซื้อ · ≥ ${d.formula.thresholds.wait} รอ · ต่ำกว่านั้นไม่ซื้อ</td></tr>
     </table></div>
 
+    <h2>กราฟราคา (บาท)</h2>
+    <div class="card">${chart(g)}
+      <p class="small muted">เส้นแดง = ราคาต่ำสุดของแต่ละวันที่เก็บข้อมูล (${g.history.filter((h) => !h.missing).length} จาก ${g.history.length} วัน แปลงเป็นบาทด้วยอัตราของรอบวันนั้น) ·
+        เส้นประเทา = ราคาปกติ ${thb(g.retailTHB)} บาท · เส้นประเขียว = ราคาต่ำสุดที่ CheapShark เคยบันทึก ${thb(g.cheapestEverTHB)} บาท (อัตรารอบล่าสุด)</p>
+      ${(() => { const p = g.history.filter((h) => !h.missing); return p.length > 1 && p.every((h) => Number(h.price) === Number(p[0].price)) && p.some((h) => h.priceTHB !== p[0].priceTHB)
+    ? `<p class="small note">ราคาดอลลาร์เท่าเดิมทุกวัน (${usd(p[0].price)}) — ราคาบาทที่ขยับเกิดจากอัตราแลกเปลี่ยนเท่านั้น (${p.map((h) => `${esc(h.day)}: ${esc(h.fx)}`).join(' → ')} บาท/USD)</p>` : ''; })()}
+      <p class="small">หลักฐาน: ${g.history.filter((h) => !h.missing).map((h) => `${esc(h.day)} ราคา ${src(h.source)} อัตรา ${src(h.fxSource)}`).join(' · ')} · ต่ำสุดที่เคยมี ${src(g.inputs.cheapestEver)}</p></div>
+
     <h2>ราคาแต่ละร้าน (บาท)</h2>
     <p class="small muted">1 USD = ${esc(g.inputs.fx.value)} บาท (อัตราของวันที่ ${esc(g.fxDate)}) ${src(g.inputs.fx)}</p>
     <div class="table-scroll"><table>
@@ -69,11 +88,6 @@ loadData().then((d) => {
         <td class="num"><strong>${thb(s.thb)}</strong></td><td class="num">${usd(s.price)}</td><td class="num">${usd(s.retailPrice)}</td>
         <td class="num">${esc(s.savings)}%</td><td><a href="${esc(s.link)}" rel="nofollow noopener" target="_blank">ไปที่ร้าน (CheapShark)</a></td></tr>`).join('')}
     </table></div>
-
-    <h2>กราฟราคา (บาท)</h2>
-    <div class="card">${chart(g, stores)}
-      <p class="small muted">แท่งแดง = ร้านที่ราคาต่ำสุดตอนนี้ · แท่งเทา = ร้านอื่น · แท่งเส้นประ = ราคาปกติ · แท่งเขียว = ราคาต่ำสุดที่ CheapShark เคยบันทึก (${src(g.inputs.cheapestEver)}) · ทุกแท่งเป็นข้อมูลรอบ ${esc(d.latest_day)} แปลงเป็นบาทด้วยอัตรา ${esc(g.inputs.fx.value)}</p>
-      <p class="small">ราคาต่ำสุดแต่ละวันที่เก็บข้อมูล (${g.history.length} วัน): ${g.history.filter((h) => !h.missing).map((h) => `${esc(h.day)} <strong>${thb(h.priceTHB)}</strong> บาท (${usd(h.price)}) ${src(h.source)}`).join(' · ')}</p></div>
 
     <h2>เหตุผลและหลักฐาน</h2>
     <div class="table-scroll"><table>
