@@ -1,0 +1,21 @@
+{
+  "name": "inblack-b",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "INBLACK GAMING Project B: buy / wait / skip recommendations for 5 games from real CheapShark + Frankfurter data",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "fetch": "node scripts/fetch-raw.js",
+    "verify": "node scripts/verify-claims.js",
+    "build:site": "node scripts/build-site-data.js",
+    "mcp": "node mcp/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "4.6.7"
+  }
+}

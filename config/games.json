@@ -1,0 +1,10 @@
+{
+  "note": "The 5 games to analyse, identified by Steam app ID. The fetch round looks each one up on CheapShark (/games?steamAppID=) to get its CheapShark gameID.",
+  "games": [
+    { "steamAppID": "1091500", "title": "Cyberpunk 2077" },
+    { "steamAppID": "1145360", "title": "Hades" },
+    { "steamAppID": "413150", "title": "Stardew Valley" },
+    { "steamAppID": "1086940", "title": "Baldur's Gate 3" },
+    { "steamAppID": "949230", "title": "Cities: Skylines II" }
+  ]
+}
