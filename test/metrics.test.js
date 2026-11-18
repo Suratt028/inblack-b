@@ -36,7 +36,9 @@ test('formula: weights, caps and thresholds from METRICS.md', () => {
 
 test('non-numeric inputs stop the calculation instead of producing a wrong verdict', () => {
   assert.throws(() => computeFactors({ savings: NaN, price: 10, cheapestEver: 5, rating: 90, ratingCount: 1 }), /savings is not a number/);
-  // analyzeGame on a copy of a real round with price = "" -> error names file + pointer
+  assert.throws(() => computeFactors({ savings: 0, price: NaN, cheapestEver: 5, rating: 90, ratingCount: 1 }), /price is not a number/);
+  assert.throws(() => computeFactors({ savings: 0, price: 10, cheapestEver: undefined, rating: 90, ratingCount: 1 }), /cheapestEver is not a number/);
+  // analyzeGame on a copy of a real round with retailPrice = "" -> error names file + pointer
   const os = require('os');
   const { analyzeGame } = require('../scripts/lib/metrics');
   const day = listDays()[0];
@@ -47,7 +49,9 @@ test('non-numeric inputs stop the calculation instead of producing a wrong verdi
   const doc = JSON.parse(fs.readFileSync(gf, 'utf8'));
   doc.deals[m.games[0].bestDealIndex].retailPrice = '';
   fs.writeFileSync(gf, JSON.stringify(doc));
-  assert.throws(() => analyzeGame(day, m.games[0], { root }), /\/retailPrice: retailPrice is not a number/);
+  try {
+    assert.throws(() => analyzeGame(day, m.games[0], { root }), /\/retailPrice: retailPrice is not a number/);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
 test('bestDealIndex: cheapest numeric price, first on ties, -1 when empty', () => {

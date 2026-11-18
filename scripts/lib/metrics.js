@@ -83,6 +83,8 @@ function analyzeGame(day, entry, { root = raw.ROOT } = {}) {
   // ---- problem data (shown on evidence.html) ----
   const at = (inp) => ({ file: inp.file, pointer: inp.pointer });
   if (game.deals[i].dealID !== entry.dealID) problems.push({ kind: 'deal-mismatch', detail: `best deal in the game file differs from the deal fetched (${entry.dealID})`, ...at(inputs.price) });
+  const ties = game.deals.filter((d) => num(d.price) === inputs.price.value).length;
+  if (ties > 1) problems.push({ kind: 'price-tie', detail: `${ties} stores share the lowest price ${inputs.price.raw}; the formula uses the first listed (deals/${i})`, ...at(inputs.price) });
   if (!(inputs.ratingCount.value > 0)) problems.push({ kind: 'no-rating', detail: 'no Steam rating; F3 = 0', ...at(inputs.ratingCount) });
   else if (inputs.ratingCount.value < LOW_REVIEW_COUNT) problems.push({ kind: 'few-reviews', detail: `only ${inputs.ratingCount.value} Steam reviews`, ...at(inputs.ratingCount) });
   if (inputs.cheapestEver.value > inputs.price.value) problems.push({ kind: 'stale-all-time-low', detail: `cheapestPriceEver ${inputs.cheapestEver.raw} is above the current best price ${inputs.price.raw}`, ...at(inputs.cheapestEver) });

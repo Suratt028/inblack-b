@@ -33,6 +33,19 @@ test('a statement with one backed and one unbacked number is rejected', () => {
   assert.equal(r.claims.find((c) => c.game_id === b[0].game_id && c.index === 0).ok, false);
 });
 
+test('dates in text must come from a claimed Unix time or the raw day', () => {
+  const b = goodBrief();
+  const e = m.games[0];
+  const a = analyzeGame(day, e);
+  const ts = Number(a.inputs.cheapestEverDate.raw);
+  const iso = new Date(ts * 1000).toISOString().slice(0, 10);
+  b[0].claims.push({ statement_th: `วันที่ราคาต่ำสุด (Unix time ${ts})`, value: ts, source: { file: a.inputs.cheapestEverDate.file, pointer: a.inputs.cheapestEverDate.pointer } });
+  b[0].summary_th += ` ต่ำสุดเมื่อ ${iso} ข้อมูลวันที่ ${day}`;
+  assert.deepEqual(verifyBrief(b).issues, []);
+  b[1].summary_th += ' ต่ำสุดเมื่อ 2001-01-01';
+  assert.match(verifyBrief(b).issues.join('\n'), /\[1\].*summary_th date 2001-01-01 has no matching claim/);
+});
+
 test('numbersIn: commas, decimals, ignores dates, given title and labels like F1', () => {
   assert.deepEqual(numbersIn('ลด 87.04% จาก 1,299 บาท'), [87.04, 1299]);
   assert.deepEqual(numbersIn('F1 ได้ 12 ลด87% x64 -5'), [12, 87, -5]);

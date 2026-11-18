@@ -79,6 +79,19 @@ function verifyBrief(brief, { root = ROOT } = {}) {
         issues.push(`${at} claim ${c.index}: ${c.reason}`);
       }
     }
+    // every YYYY-MM-DD date in the text must be a claimed Unix time (UTC or Asia/Bangkok day) or a raw-data day of a claim
+    const okDates = new Set();
+    for (const c of claims.filter((x) => x.game_id === g.game_id && x.ok)) {
+      if (c.value > 1e9 && c.value < 1e10) for (const off of [0, 7]) okDates.add(new Date((c.value + off * 3600) * 1000).toISOString().slice(0, 10));
+      const m = /^data\/raw\/(\d{4}-\d{2}-\d{2})\//.exec(c.source.file);
+      if (m) okDates.add(m[1]);
+    }
+    const texts = [['summary_th', g.summary_th], ...g.claims.map((c, ci) => [`claim ${ci} statement_th`, c && c.statement_th])];
+    for (const [where, t] of texts) {
+      for (const d of String(t || '').match(/\b\d{4}-\d{2}-\d{2}\b/g) || []) {
+        if (!okDates.has(d)) issues.push(`${at}: ${where} date ${d} has no matching claim`);
+      }
+    }
     for (const n of numbersIn(g.summary_th, ignore)) {
       if (!values.includes(r2(n))) issues.push(`${at}: summary_th number ${n} has no matching claim`);
     }
