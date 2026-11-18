@@ -41,6 +41,10 @@ test('shell: block writes/deletes touching data/raw, allow reads and npm run fet
     'node -e "require(\'fs\').writeFileSync(\'data/raw/2026-11-18/a.json\',\'1\')"',
     'git checkout -- data/raw',
     'Set-Content data\\raw\\2026-11-18\\a.json 1',
+    '  rm data/raw/x.json',
+    'time rm data/raw/x',
+    'env rm data/raw/x',
+    'find data/raw -name "*.json" -delete',
   ]) assert.ok(call('Bash', { command: cmd }), cmd);
   // chained after the allowed fetch command -> still checked
   for (const cmd of ['npm run fetch && rm -rf data/raw/2026-11-18', 'node scripts/fetch-raw.js ; echo 1 > data/raw/x.json', 'npm run fetch\nrm data/raw/x']) {
