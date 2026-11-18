@@ -1,0 +1,230 @@
+{
+  "day": "2026-11-18",
+  "user_agent": "inblack-b/1.0",
+  "max_requests": 30,
+  "started_at": "2026-11-18T06:37:08.847Z",
+  "finished_at": "2026-11-18T06:37:31.113Z",
+  "complete": true,
+  "request_count": 17,
+  "requests": [
+    {
+      "n": 1,
+      "url": "https://www.cheapshark.com/api/1.0/stores",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:08.848Z",
+      "file": "stores.json",
+      "bytes": 6390,
+      "sha256": "e3a6272744408ba41b1d0cf7fdc727161dec3fe3e7eaca6bf6f1a006abeab8cd"
+    },
+    {
+      "n": 2,
+      "url": "https://api.frankfurter.dev/v1/latest?base=USD&symbols=THB",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:10.062Z",
+      "file": "fx-usd-thb.json",
+      "bytes": 69,
+      "sha256": "30731343027eff1c93034e146a20f1b067e4a2beb9c05c48ffb35715a4427751"
+    },
+    {
+      "n": 3,
+      "url": "https://www.cheapshark.com/api/1.0/games?steamAppID=1091500",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:11.272Z",
+      "file": "lookup-1091500.json",
+      "bytes": 369,
+      "sha256": "85c28074bf267612aaef4c6eaa00be8ee1c3dd66333ce144893d9ea89531fdd3"
+    },
+    {
+      "n": 4,
+      "url": "https://www.cheapshark.com/api/1.0/games?id=202350",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:12.484Z",
+      "file": "game-202350.json",
+      "bytes": 709,
+      "sha256": "519c7c4e0235e238f0bbb329279f79483f840e96cfa4a8afb83696a9918d1820"
+    },
+    {
+      "n": 5,
+      "url": "https://www.cheapshark.com/api/1.0/deals?id=nL0Ha1MA6fsRIJ%2FHgfy6v1cFfdVeunYwSNCn2KnuS1M%3D",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:16.276Z",
+      "file": "deal-202350.json",
+      "bytes": 603,
+      "sha256": "9b8cdf02d1789a4d6a992592df0c5ab9ec81bc4eb7d34a1a10251173fb27c0a1"
+    },
+    {
+      "n": 6,
+      "url": "https://www.cheapshark.com/api/1.0/games?steamAppID=1145360",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:17.483Z",
+      "file": "lookup-1145360.json",
+      "bytes": 297,
+      "sha256": "32615b5a2f9543494ac12844fd8f4d8992dfd29b80e07817e214e3aeb4e0319b"
+    },
+    {
+      "n": 7,
+      "url": "https://www.cheapshark.com/api/1.0/games?id=196149",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:18.694Z",
+      "file": "game-196149.json",
+      "bytes": 373,
+      "sha256": "8c19da13e8f84948fe5fdd9fa25b6b91840006b53ed4511102cc6abeae3b05c8"
+    },
+    {
+      "n": 8,
+      "url": "https://www.cheapshark.com/api/1.0/deals?id=%2FRRvRbW4trH2Me4HcfUIFk5pCGamwlMuyid9ZTDJ4do%3D",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:19.901Z",
+      "file": "deal-196149.json",
+      "bytes": 538,
+      "sha256": "3d8fccf8857ce4cbc6cc51178179c409a7ac897c474865734d69de2ae7250364"
+    },
+    {
+      "n": 9,
+      "url": "https://www.cheapshark.com/api/1.0/games?steamAppID=413150",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:21.113Z",
+      "file": "lookup-413150.json",
+      "bytes": 314,
+      "sha256": "80615ba466292053243bfd1dfd026860fd9a881e9ea804e8b9d5a1c80e7e37b3"
+    },
+    {
+      "n": 10,
+      "url": "https://www.cheapshark.com/api/1.0/games?id=150036",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:22.317Z",
+      "file": "game-150036.json",
+      "bytes": 521,
+      "sha256": "07eb44f5b6864476a39d45c4316cab8a0e95d78acaae3cf7ad1854ba3c540107"
+    },
+    {
+      "n": 11,
+      "url": "https://www.cheapshark.com/api/1.0/deals?id=E3ecNmf5bHYtfrYPa0KNgRMwu%2Bc3uZ9awLB%2B1g4hl0k%3D",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:23.520Z",
+      "file": "deal-150036.json",
+      "bytes": 553,
+      "sha256": "c494734e882e86ddc34f4c34fb3b206bd090cd96cd44c5a57b4e53c95588d080"
+    },
+    {
+      "n": 12,
+      "url": "https://www.cheapshark.com/api/1.0/games?steamAppID=1086940",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:24.727Z",
+      "file": "lookup-1086940.json",
+      "bytes": 358,
+      "sha256": "2d27752593401a902060471f753eda114c080703d1307151ad00f26e28026ed9"
+    },
+    {
+      "n": 13,
+      "url": "https://www.cheapshark.com/api/1.0/games?id=202278",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:25.933Z",
+      "file": "game-202278.json",
+      "bytes": 563,
+      "sha256": "3a779cee7ab9c24d8a00cae09e8811c8da67f0a0d39e9e2208236db2350b201e"
+    },
+    {
+      "n": 14,
+      "url": "https://www.cheapshark.com/api/1.0/deals?id=KR6JzYIE5jQz4X%2FqfqZL7uqeWAALnY%2Beipr2lwHIFGI%3D",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:27.144Z",
+      "file": "deal-202278.json",
+      "bytes": 600,
+      "sha256": "1c896485c71d9af26963a328c2c311ed792603b72fa998e7872aad91a9154d2e"
+    },
+    {
+      "n": 15,
+      "url": "https://www.cheapshark.com/api/1.0/games?steamAppID=949230",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:28.351Z",
+      "file": "lookup-949230.json",
+      "bytes": 364,
+      "sha256": "22bbdd542de401572447e8c2ada2ef512757aed2b0233dd26655b44f88e45187"
+    },
+    {
+      "n": 16,
+      "url": "https://www.cheapshark.com/api/1.0/games?id=264418",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:29.554Z",
+      "file": "game-264418.json",
+      "bytes": 1105,
+      "sha256": "2c045b09300d637892f7d2cc88a8fbc78e9b600b40ba21645a5dae9e3979fc77"
+    },
+    {
+      "n": 17,
+      "url": "https://www.cheapshark.com/api/1.0/deals?id=PLa%2FS65P0IxF1YHB%2FhGt6bAsc2ysyByCkRWhvMINH18%3D",
+      "status": 200,
+      "fetched_at": "2026-11-18T06:37:30.766Z",
+      "file": "deal-264418.json",
+      "bytes": 586,
+      "sha256": "29c8a34523fb523487317edf20cb0565b4ec6d895c0244d1cdf23c070db45b0f"
+    }
+  ],
+  "files": {
+    "stores": "stores.json",
+    "fx": "fx-usd-thb.json"
+  },
+  "games": [
+    {
+      "steamAppID": "1091500",
+      "title": "Cyberpunk 2077",
+      "gameID": "202350",
+      "files": {
+        "lookup": "lookup-1091500.json",
+        "game": "game-202350.json",
+        "deal": "deal-202350.json"
+      },
+      "bestDealIndex": 0,
+      "dealID": "nL0Ha1MA6fsRIJ%2FHgfy6v1cFfdVeunYwSNCn2KnuS1M%3D"
+    },
+    {
+      "steamAppID": "1145360",
+      "title": "Hades",
+      "gameID": "196149",
+      "files": {
+        "lookup": "lookup-1145360.json",
+        "game": "game-196149.json",
+        "deal": "deal-196149.json"
+      },
+      "bestDealIndex": 0,
+      "dealID": "%2FRRvRbW4trH2Me4HcfUIFk5pCGamwlMuyid9ZTDJ4do%3D"
+    },
+    {
+      "steamAppID": "413150",
+      "title": "Stardew Valley",
+      "gameID": "150036",
+      "files": {
+        "lookup": "lookup-413150.json",
+        "game": "game-150036.json",
+        "deal": "deal-150036.json"
+      },
+      "bestDealIndex": 0,
+      "dealID": "E3ecNmf5bHYtfrYPa0KNgRMwu%2Bc3uZ9awLB%2B1g4hl0k%3D"
+    },
+    {
+      "steamAppID": "1086940",
+      "title": "Baldur's Gate 3",
+      "gameID": "202278",
+      "files": {
+        "lookup": "lookup-1086940.json",
+        "game": "game-202278.json",
+        "deal": "deal-202278.json"
+      },
+      "bestDealIndex": 0,
+      "dealID": "KR6JzYIE5jQz4X%2FqfqZL7uqeWAALnY%2Beipr2lwHIFGI%3D"
+    },
+    {
+      "steamAppID": "949230",
+      "title": "Cities: Skylines II",
+      "gameID": "264418",
+      "files": {
+        "lookup": "lookup-949230.json",
+        "game": "game-264418.json",
+        "deal": "deal-264418.json"
+      },
+      "bestDealIndex": 0,
+      "dealID": "PLa%2FS65P0IxF1YHB%2FhGt6bAsc2ysyByCkRWhvMINH18%3D"
+    }
+  ]
+}
