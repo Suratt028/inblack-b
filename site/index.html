@@ -8,32 +8,64 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="./">ซื้อ · รอ · ไม่ซื้อ</a>
-  <nav><a href="./">5 เกม</a><a href="evidence.html">หลักฐาน</a></nav>
+  <a class="brand" href="./"><span class="logo" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="brand-name"><b>INBLACK</b><small>DEALS</small></span></a>
+  <nav aria-label="หลัก"><a href="./" aria-current="page">5 เกม</a><a href="evidence.html">หลักฐาน</a></nav>
 </div></header>
+<section class="hero"><div class="wrap">
+  <div class="pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="hero-copy">
+    <span class="chip" id="round">กำลังโหลด…</span>
+    <h1>ควรซื้อ รอ หรือไม่ซื้อ?<br>ตัดสินจาก<span class="hl">ข้อมูลจริง</span></h1>
+    <p class="term">&gt;_ ราคาจาก CheapShark × อัตราแลกเปลี่ยน Frankfurter — ทุกตัวเลขตรวจย้อนไปถึงไฟล์ดิบได้</p>
+    <div class="actions">
+      <a class="btn primary" href="#games">ดูคำแนะนำ</a>
+      <a class="btn ghost" href="evidence.html">ตรวจหลักฐาน →</a>
+    </div>
+  </div>
+  <aside class="tally" id="tally" aria-label="สรุปผลรอบนี้"></aside>
+</div></section>
 <main class="wrap">
-  <h1>ควรซื้อ รอ หรือไม่ซื้อ: 5 เกม</h1>
-  <p class="muted" id="updated">กำลังโหลด…</p>
+  <span class="eyebrow">VERDICT</span>
+  <h2>คำแนะนำ<span class="hl">รอบนี้</span></h2>
+  <p class="muted small" id="updated">กำลังโหลด…</p>
   <div class="grid" id="games"></div>
-  <h2>คำนวณอย่างไร</h2>
-  <p class="small">คะแนนเต็ม 100 = ส่วนลดจากราคาปกติ (40) + ใกล้ราคาต่ำสุดที่เคยมี (35) + คะแนนรีวิว Steam (25) ·
-    <span id="thresholds"></span> · สูตรเต็มและจุดอ่อน: <a href="https://github.com/Suratt028/inblack-b/blob/main/METRICS.md">METRICS.md</a> ·
-    ทุกตัวเลขตรวจกลับไปที่ไฟล์ดิบได้ในหน้า <a href="evidence.html">หลักฐาน</a></p>
+  <section class="band" id="formula">
+    <div>
+      <span class="eyebrow">METRICS.md</span>
+      <h2>คำนวณอย่างไร</h2>
+      <p class="small">คะแนนเต็ม 100 = ส่วนลดจากราคาปกติ + ใกล้ราคาต่ำสุดที่เคยมี + คะแนนรีวิว Steam ·
+        <span id="thresholds"></span> · สูตรเต็มและจุดอ่อน: <a href="https://github.com/Suratt028/inblack-b/blob/main/METRICS.md">METRICS.md</a> ·
+        ทุกตัวเลขตรวจกลับไปที่ไฟล์ดิบได้ในหน้า <a href="evidence.html">หลักฐาน</a></p>
+    </div>
+    <div class="weights" id="weights"></div>
+  </section>
 </main>
 <footer><div class="wrap">ข้อมูลราคาจาก <a href="https://www.cheapshark.com/">CheapShark</a> (ลิงก์ร้านผ่าน CheapShark) · อัตราแลกเปลี่ยนจาก <a href="https://frankfurter.dev/">Frankfurter</a> · ไม่ใช่คำแนะนำทางการเงิน</div></footer>
 <script src="assets/common.js"></script>
 <script>
 loadData().then((d) => {
+  const t = d.formula.thresholds, w = d.formula.weights;
+  document.getElementById('round').textContent = `รอบข้อมูล ${d.latest_day}`;
   document.getElementById('updated').innerHTML =
     `อัปเดตข้อมูล: ${esc(thaiTime(d.updated_at))} (รอบข้อมูล ${esc(d.latest_day)}) · เก็บข้อมูลแล้ว ${d.days.length} วัน: ${d.days.map(esc).join(', ')}`;
-  document.getElementById('thresholds').textContent = `≥ ${d.formula.thresholds.buy} ซื้อ, ≥ ${d.formula.thresholds.wait} รอ, ต่ำกว่านั้นไม่ซื้อ`;
+  document.getElementById('thresholds').textContent = `≥ ${t.buy} ซื้อ, ≥ ${t.wait} รอ, ต่ำกว่านั้นไม่ซื้อ`;
+  document.getElementById('weights').innerHTML = [['F1', 'ส่วนลด', 'จากราคาปกติของร้าน'], ['F2', 'ใกล้ราคาต่ำสุด', 'เทียบราคาต่ำสุดที่เคยมี'], ['F3', 'คุณภาพ', '% รีวิวบวกบน Steam']]
+    .map(([k, name, sub]) => `<div><b>${esc(w[k])}</b><strong>${k} ${name}</strong><span>${sub}</span></div>`).join('');
+  const count = (v) => d.games.filter((g) => g.verdict === v).length;
+  const top = d.games.slice().sort((a, b) => b.score - a.score)[0];
+  document.getElementById('tally').innerHTML = `
+    <div class="row"><strong style="font-size:18px">ผลรอบนี้</strong><span class="small muted">ซื้อ ≥ ${esc(t.buy)} · รอ ≥ ${esc(t.wait)}</span></div>
+    <div class="cells">${['buy', 'wait', 'skip'].map((v) => `<div class="cell ${v}"><b>${count(v)}</b>${VERDICT_TH[v]}</div>`).join('')}</div>
+    ${top ? `<div><span class="small muted">คะแนนสูงสุด</span>
+      <div class="row"><strong>${esc(top.title)}</strong><span class="score">${top.score}</span></div>
+      <div class="bar" aria-hidden="true"><span style="width:${Math.max(0, Math.min(100, top.score))}%"></span></div></div>` : ''}`;
   document.getElementById('games').innerHTML = d.games.map((g) => `
     <a class="card game" href="game.html?id=${encodeURIComponent(g.game_id)}">
       ${g.thumb ? `<img src="${esc(g.thumb)}" alt="" loading="lazy">` : ''}
       <div class="row"><strong>${esc(g.title)}</strong>${badge(g.verdict)}</div>
-      <div class="row small"><span>คะแนน <span class="score">${g.score}</span>/100</span>
-        <span>ราคาต่ำสุดตอนนี้ ${thb(g.priceTHB)} บาท</span></div>
-      <div class="bar" aria-hidden="true"><span style="width:${Math.max(0, Math.min(100, g.score))}%"></span></div>
+      <div><span class="small muted">ราคาต่ำสุดตอนนี้</span><br><span class="price">${thb(g.priceTHB)} บาท</span></div>
+      <div><div class="row small"><span class="muted">คะแนน</span><span><span class="score">${g.score}</span>/100</span></div>
+        <div class="bar" aria-hidden="true"><span style="width:${Math.max(0, Math.min(100, g.score))}%"></span></div></div>
     </a>`).join('');
 }).catch(fail);
 </script>
