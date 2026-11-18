@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>หลักฐานทุกข้ออ้าง</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./">ซื้อ · รอ · ไม่ซื้อ</a>
+  <nav><a href="./">5 เกม</a><a href="evidence.html">หลักฐาน</a></nav>
+</div></header>
+<main class="wrap"><p class="muted">กำลังโหลด…</p></main>
+<footer><div class="wrap">ไฟล์ดิบทุกไฟล์อยู่ใน <a href="https://github.com/Suratt028/inblack-b/tree/main/data/raw">data/raw/</a> พร้อม <code>_manifest.json</code> (URL, เวลา, sha256 ของทุกคำขอ) · ตรวจซ้ำเองได้ด้วย <code>npm run verify</code></div></footer>
+<script src="assets/common.js"></script>
+<script>
+loadData().then((d) => {
+  const v = d.verification;
+  const rounds = (d.review && d.review.rounds) || [];
+  const wrong = (d.review && d.review.wrong_cases) || [];
+  const title = (id) => (d.games.find((g) => g.game_id === id) || {}).title || id;
+  const problems = d.games.flatMap((g) => g.problems.map((p) => ({ ...p, title: g.title })));
+  document.querySelector('main').innerHTML = `
+    <h1>หลักฐานทุกข้ออ้าง</h1>
+    <p class="muted">รอบข้อมูล ${esc(d.latest_day)} · ตรวจใหม่จากไฟล์ดิบทุกครั้งที่สร้างเว็บ:
+      <span class="${v.ok ? 'ok' : 'bad'}">${v.claims} ข้ออ้าง ตรง ${v.matchPct}%</span>${v.issues.length ? ` · ปัญหา ${v.issues.length}` : ''}</p>
+    ${v.issues.length ? `<ul class="note">${v.issues.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : ''}
+
+    <h2>ข้ออ้างทั้งหมด</h2>
+    ${d.games.map((g) => `
+      <details class="card" style="margin-bottom:10px" open>
+        <summary><strong>${esc(g.title)}</strong> ${badge(g.verdict)} <span class="small muted">${g.claims.length} ข้ออ้าง · <a href="game.html?id=${encodeURIComponent(g.game_id)}">หน้าเกม</a></span></summary>
+        <div class="table-scroll"><table>
+          <tr><th>ข้ออ้าง</th><th class="num">ค่า</th><th>ค่าในไฟล์ดิบ</th><th>ไฟล์ + pointer</th><th>ผล</th></tr>
+          ${g.claims.map((c) => `<tr><td>${esc(c.statement_th)}</td><td class="num">${esc(c.value)}</td><td><code>${esc(JSON.stringify(c.actual))}</code></td>
+            <td>${src(c.source)}</td><td>${c.ok ? '<span class="ok">ตรง</span>' : `<span class="bad">ไม่ตรง</span> ${esc(c.reason)}`}</td></tr>`).join('')}
+        </table></div>
+      </details>`).join('')}
+
+    <h2>ข้อมูลที่มีปัญหา</h2>
+    <p class="small muted">พบอัตโนมัติจากไฟล์ดิบ (<code>scripts/lib/metrics.js</code>) — ไม่ได้แก้ไฟล์ดิบ แต่แจ้งไว้ให้เห็น</p>
+    <div class="table-scroll"><table>
+      <tr><th>เกม</th><th>ปัญหา</th><th>รายละเอียด</th><th>ไฟล์ + pointer</th></tr>
+      ${problems.map((p) => `<tr><td>${esc(p.title)}</td><td><code>${esc(p.kind)}</code></td><td>${esc(p.detail)}</td><td>${src(p)}</td></tr>`).join('')}
+    </table></div>
+
+    <h2>สิ่งที่ถูกตีกลับ</h2>
+    <p class="small muted">ผู้ตรวจอิสระ (sub-agent <code>evidence-reviewer</code> + skill <code>verify-deal-claim</code>) — รายงานเต็ม <a href="https://github.com/Suratt028/inblack-b/blob/main/REVIEW.md">REVIEW.md</a></p>
+    ${rounds.map((r) => `
+      <div class="card" style="margin-bottom:10px">
+        <div class="row"><strong>รอบ ${esc(r.round)}</strong><span class="small muted">${esc(r.brief_file)} · ข้ออ้างตรง ${esc(r.claims_accepted)}/${esc(r.claims_total)}</span></div>
+        ${r.rejected && r.rejected.length ? `<div class="table-scroll"><table>
+          <tr><th>เกม</th><th>ข้อความที่ถูกตีกลับ</th><th>เหตุผล</th><th>หลักฐาน</th></tr>
+          ${r.rejected.map((x) => `<tr><td>${esc(title(x.game_id))}<br><span class="small muted">${esc(x.field)}</span></td><td>${esc(x.text)}</td><td>${esc(x.reason)}</td>
+            <td>${(x.evidence || []).map(src).join('<br>')}</td></tr>`).join('')}
+        </table></div>` : '<p class="ok">ไม่มีข้อที่ถูกตีกลับ</p>'}
+      </div>`).join('') || '<p class="muted">ยังไม่มีผลตรวจ</p>'}
+
+    <h2>เคสที่สูตรให้คำตอบผิด</h2>
+    <p class="small muted">รายละเอียด <a href="https://github.com/Suratt028/inblack-b/blob/main/WRONG_CASES.md">WRONG_CASES.md</a></p>
+    <div class="table-scroll"><table>
+      <tr><th>เกม</th><th>สูตรตอบ</th><th>ควรเป็น</th><th>เหตุผล</th><th>หลักฐาน</th></tr>
+      ${wrong.map((w) => `<tr><td>${esc(title(w.game_id))}</td><td>${badge(w.formula_verdict)}</td><td>${badge(w.should_be)}</td><td>${esc(w.reason)}</td>
+        <td>${(w.evidence || []).map(src).join('<br>')}</td></tr>`).join('')}
+    </table></div>
+
+    <h2>ข้อมูลดิบที่เก็บ</h2>
+    <ul>${d.rounds.map((r) => `<li><a href="https://github.com/Suratt028/inblack-b/blob/main/data/raw/${esc(r.day)}/_manifest.json">${esc(r.day)}</a> — ${r.request_count} คำขอ (เกณฑ์ ≤ 30) · ${esc(r.user_agent)} · ${esc(thaiTime(r.finished_at))}</li>`).join('')}</ul>
+  `;
+}).catch(fail);
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ซื้อ รอ หรือไม่ซื้อ — 5 เกม</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./">ซื้อ · รอ · ไม่ซื้อ</a>
+  <nav><a href="./">5 เกม</a><a href="evidence.html">หลักฐาน</a></nav>
+</div></header>
+<main class="wrap">
+  <h1>ควรซื้อ รอ หรือไม่ซื้อ: 5 เกม</h1>
+  <p class="muted" id="updated">กำลังโหลด…</p>
+  <div class="grid" id="games"></div>
+  <h2>คำนวณอย่างไร</h2>
+  <p class="small">คะแนนเต็ม 100 = ส่วนลดจากราคาปกติ (40) + ใกล้ราคาต่ำสุดที่เคยมี (35) + คะแนนรีวิว Steam (25) ·
+    <span id="thresholds"></span> · สูตรเต็มและจุดอ่อน: <a href="https://github.com/Suratt028/inblack-b/blob/main/METRICS.md">METRICS.md</a> ·
+    ทุกตัวเลขตรวจกลับไปที่ไฟล์ดิบได้ในหน้า <a href="evidence.html">หลักฐาน</a></p>
+</main>
+<footer><div class="wrap">ข้อมูลราคาจาก <a href="https://www.cheapshark.com/">CheapShark</a> (ลิงก์ร้านผ่าน CheapShark) · อัตราแลกเปลี่ยนจาก <a href="https://frankfurter.dev/">Frankfurter</a> · ไม่ใช่คำแนะนำทางการเงิน</div></footer>
+<script src="assets/common.js"></script>
+<script>
+loadData().then((d) => {
+  document.getElementById('updated').innerHTML =
+    `อัปเดตข้อมูล: ${esc(thaiTime(d.updated_at))} (รอบข้อมูล ${esc(d.latest_day)}) · เก็บข้อมูลแล้ว ${d.days.length} วัน: ${d.days.map(esc).join(', ')}`;
+  document.getElementById('thresholds').textContent = `≥ ${d.formula.thresholds.buy} ซื้อ, ≥ ${d.formula.thresholds.wait} รอ, ต่ำกว่านั้นไม่ซื้อ`;
+  document.getElementById('games').innerHTML = d.games.map((g) => `
+    <a class="card game" href="game.html?id=${encodeURIComponent(g.game_id)}">
+      ${g.thumb ? `<img src="${esc(g.thumb)}" alt="" loading="lazy">` : ''}
+      <div class="row"><strong>${esc(g.title)}</strong>${badge(g.verdict)}</div>
+      <div class="row small"><span>คะแนน <span class="score">${g.score}</span>/100</span>
+        <span>ราคาต่ำสุดตอนนี้ ${thb(g.priceTHB)} บาท</span></div>
+      <div class="bar" aria-hidden="true"><span style="width:${Math.max(0, Math.min(100, g.score))}%"></span></div>
+    </a>`).join('');
+}).catch(fail);
+</script>
+</body>
+</html>

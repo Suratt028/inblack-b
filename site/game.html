@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>รายละเอียดเกม</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./">ซื้อ · รอ · ไม่ซื้อ</a>
+  <nav><a href="./">5 เกม</a><a href="evidence.html">หลักฐาน</a></nav>
+</div></header>
+<main class="wrap"><p class="muted">กำลังโหลด…</p></main>
+<footer><div class="wrap">ลิงก์ร้านทั้งหมดผ่าน CheapShark (redirect) · ราคาบาท = ราคา USD × อัตราแลกเปลี่ยนจาก Frankfurter (ใช้แสดงผลเท่านั้น ไม่มีผลกับคะแนน)</div></footer>
+<script src="assets/common.js"></script>
+<script>
+const FACTORS = [
+  ['F1', 'ส่วนลดจากราคาปกติ', 40, (g) => `40 × ${g.inputs.savings.value} / 100`, (g) => [g.inputs.savings]],
+  ['F2', 'ใกล้ราคาต่ำสุดที่เคยมี', 35, (g) => `35 × min(1, ${g.inputs.cheapestEver.value} / ${g.inputs.price.value})`, (g) => [g.inputs.cheapestEver, g.inputs.price]],
+  ['F3', 'คะแนนรีวิว Steam', 25, (g) => `25 × ${g.inputs.rating.value} / 100`, (g) => [g.inputs.rating]],
+];
+
+// Price chart (THB): best price per collected day, retail price, all-time low.
+function chart(g) {
+  const W = 640, H = 220, L = 64, R = 16, T = 16, B = 34;
+  const pts = g.history.filter((h) => !h.missing);
+  const fx = g.inputs.fx.value;
+  const ys = pts.map((h) => h.priceTHB).concat([g.retailTHB, g.cheapestEverTHB]);
+  const max = Math.max(...ys) * 1.08, min = Math.min(0, ...ys);
+  const x = (i) => (pts.length === 1 ? L + (W - L - R) / 2 : L + i * (W - L - R) / (pts.length - 1));
+  const y = (v) => T + (H - T - B) * (1 - (v - min) / (max - min));
+  const ticks = [0, 0.25, 0.5, 0.75, 1].map((f) => min + f * (max - min));
+  let s = `<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="กราฟราคาเป็นบาท">`;
+  for (const t of ticks) s += `<line x1="${L}" x2="${W - R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${Math.round(t).toLocaleString('th-TH')}</text>`;
+  s += `<line x1="${L}" x2="${W - R}" y1="${y(g.retailTHB)}" y2="${y(g.retailTHB)}" stroke="var(--muted)" stroke-dasharray="6 4"/>`;
+  s += `<text x="${W - R}" y="${y(g.retailTHB) - 5}" text-anchor="end">ราคาปกติ ${thb(g.retailTHB)}</text>`;
+  s += `<line x1="${L}" x2="${W - R}" y1="${y(g.cheapestEverTHB)}" y2="${y(g.cheapestEverTHB)}" stroke="var(--buy)" stroke-dasharray="2 4"/>`;
+  s += `<text x="${W - R}" y="${y(g.cheapestEverTHB) - 5}" text-anchor="end" style="fill:var(--buy)">ต่ำสุดที่เคยมี ${thb(g.cheapestEverTHB)}</text>`;
+  if (pts.length > 1) s += `<polyline fill="none" stroke="var(--accent)" stroke-width="2.5" points="${pts.map((h, i) => `${x(i)},${y(h.priceTHB)}`).join(' ')}"/>`;
+  pts.forEach((h, i) => {
+    s += `<circle cx="${x(i)}" cy="${y(h.priceTHB)}" r="5" fill="var(--accent)"><title>${h.day}: ${thb(h.priceTHB)} บาท</title></circle>`;
+    s += `<text x="${x(i)}" y="${H - 12}" text-anchor="middle">${h.day}</text>`;
+    s += `<text x="${x(i)}" y="${y(h.priceTHB) - 9}" text-anchor="middle" style="fill:var(--accent)">${thb(h.priceTHB)}</text>`;
+  });
+  return s + '</svg>' + (fx ? '' : '');
+}
+
+loadData().then((d) => {
+  const id = new URLSearchParams(location.search).get('id');
+  const g = d.games.find((x) => x.game_id === id);
+  if (!g) throw new Error(`ไม่พบเกม id=${id || '(ไม่ได้ระบุ)'} · เลือกเกมจากหน้าแรก`);
+  document.title = `${g.title} — ${VERDICT_TH[g.verdict]}`;
+  const stores = g.stores.slice().sort((a, b) => a.price - b.price);
+  const claims = g.claims || [];
+  document.querySelector('main').innerHTML = `
+    <p class="small"><a href="./">← 5 เกม</a></p>
+    <h1>${esc(g.title)}</h1>
+    <p class="muted">ข้อมูลรอบ ${esc(d.latest_day)} · อัปเดต ${esc(thaiTime(d.updated_at))} · CheapShark gameID ${esc(g.game_id)}</p>
+    <div class="card"><div class="row"><div>แนะนำ ${badge(g.verdict)}</div><div class="score" style="font-size:1.6rem">${g.score}/100</div></div>
+      ${g.summary_th ? `<p>${esc(g.summary_th)}</p>` : ''}</div>
+
+    <h2>คะแนน</h2>
+    <div class="table-scroll"><table>
+      <tr><th>ปัจจัย</th><th class="num">คะแนน</th><th>สูตร</th><th>หลักฐาน</th></tr>
+      ${FACTORS.map(([k, name, max, f, ins]) => `<tr><td>${name}</td><td class="num"><span class="score">${g.factors[k]}</span>/${max}</td>
+        <td><code>${esc(f(g))}</code></td><td>${ins(g).map(src).join('<br>')}</td></tr>`).join('')}
+      <tr><td><strong>รวม</strong></td><td class="num"><strong>${g.score}</strong>/100</td><td colspan="2" class="small muted">≥ ${d.formula.thresholds.buy} ซื้อ · ≥ ${d.formula.thresholds.wait} รอ · ต่ำกว่านั้นไม่ซื้อ</td></tr>
+    </table></div>
+
+    <h2>ราคาแต่ละร้าน (บาท)</h2>
+    <p class="small muted">1 USD = ${g.inputs.fx.value} บาท (อัตราของวันที่ ${esc(g.fxDate)}) ${src(g.inputs.fx)}</p>
+    <div class="table-scroll"><table>
+      <tr><th>ร้าน</th><th class="num">ราคา (บาท)</th><th class="num">USD</th><th class="num">ราคาปกติ USD</th><th class="num">ลด</th><th>ซื้อ</th></tr>
+      ${stores.map((s) => `<tr><td>${esc(s.storeName)}${s.storeActive ? '' : ' <span class="bad small">(ร้านปิด)</span>'}<br>${src(s.source)}</td>
+        <td class="num"><strong>${thb(s.thb)}</strong></td><td class="num">${usd(s.price)}</td><td class="num">${usd(s.retailPrice)}</td>
+        <td class="num">${s.savings}%</td><td><a href="${esc(s.link)}" rel="nofollow noopener" target="_blank">ไปที่ร้าน (CheapShark)</a></td></tr>`).join('')}
+    </table></div>
+
+    <h2>กราฟราคา (บาท)</h2>
+    <div class="card">${chart(g)}
+      <p class="small muted">จุด = ราคาต่ำสุดของวันที่เก็บข้อมูล (${g.history.length} วัน) · เส้นประ = ราคาปกติ · เส้นจุด = ราคาต่ำสุดที่ CheapShark เคยบันทึก (${src(g.inputs.cheapestEver)}) · จุดราคาแต่ละวันแปลงเป็นบาทด้วยอัตราของรอบวันนั้น ส่วนเส้นราคาปกติและต่ำสุดใช้อัตราของรอบล่าสุด</p>
+      ${g.history.length < 2 ? '<p class="note">ตอนนี้มีข้อมูลเพียง 1 วัน กราฟจะมีเส้นเมื่อเก็บข้อมูลวันที่ 2</p>' : ''}</div>
+
+    <h2>เหตุผลและหลักฐาน</h2>
+    <div class="table-scroll"><table>
+      <tr><th>ข้ออ้าง</th><th class="num">ค่า</th><th>ไฟล์ + pointer</th><th>ตรวจ</th></tr>
+      ${claims.map((c) => `<tr><td>${esc(c.statement_th)}</td><td class="num">${esc(c.value)}</td><td>${src(c.source)}</td>
+        <td>${c.ok ? '<span class="ok">ตรง</span>' : `<span class="bad">ไม่ตรง</span> ${esc(c.reason)}`}</td></tr>`).join('')}
+    </table></div>
+    ${g.problems.length ? `<h2>ข้อมูลที่มีปัญหา</h2><ul>${g.problems.map((p) => `<li><strong>${esc(p.kind)}</strong>: ${esc(p.detail)}<br>${src(p)}</li>`).join('')}</ul>` : ''}
+  `;
+}).catch(fail);
+</script>
+</body>
+</html>
