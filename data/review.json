@@ -16,10 +16,22 @@
           "text": "ดีลที่ถูกที่สุดคือ Humble Store ราคา 59.99 ดอลลาร์",
           "reason": "ไม่มีดีลไหนถูกที่สุดเพียงดีลเดียว: Humble Store, GOG และ Steam ราคาเท่ากันที่ 59.99 และ cheapestDealID ของ CheapShark ชี้ไปที่ดีลของ Steam ชื่อร้านก็ไม่มี claim รองรับ",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/0/price" },
-            { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/1/price" },
-            { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/2/price" },
-            { "file": "data/raw/2026-11-18/lookup-1091500.json", "pointer": "/0/cheapestDealID" }
+            {
+              "file": "data/raw/2026-11-18/game-202350.json",
+              "pointer": "/deals/0/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202350.json",
+              "pointer": "/deals/1/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202350.json",
+              "pointer": "/deals/2/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/lookup-1091500.json",
+              "pointer": "/0/cheapestDealID"
+            }
           ]
         },
         {
@@ -28,9 +40,18 @@
           "text": "Hades มีขายที่ Steam ร้านเดียวในรอบนี้ ... แต่ตามสูตรควรรอโปรมากกว่าซื้อราคาเต็มตอนนี้ จึงได้ผลว่าไม่ซื้อ",
           "reason": "ข้อมูลมีแค่ร้านที่ CheapShark ติดตาม ไม่ได้บอกว่าเกมขายแค่ที่ Steam และประโยคใช้เหตุผลของ wait มาอธิบาย verdict skip (score 33.24 < 40) พร้อมบอกเป็นนัยว่าจะมีโปรอีก ซึ่งข้อมูลไม่ได้บอก",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals" },
-            { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals/0/storeID" },
-            { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/cheapestPriceEver/price" }
+            {
+              "file": "data/raw/2026-11-18/game-196149.json",
+              "pointer": "/deals"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-196149.json",
+              "pointer": "/deals/0/storeID"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-196149.json",
+              "pointer": "/cheapestPriceEver/price"
+            }
           ]
         },
         {
@@ -39,9 +60,18 @@
           "text": "ดีลที่ถูกที่สุดคือ GOG ราคา 14.99 ดอลลาร์ ... (เป็นราคาที่เก่ามาก)",
           "reason": "GOG กับ Steam ราคาเท่ากันที่ 14.99 (สูตรเลือก GOG เพราะกติกาเสมอกันเอาตัวแรก) และ 'เก่ามาก' ไม่มี claim วันที่รองรับ",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/0/price" },
-            { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/1/price" },
-            { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/cheapestPriceEver/date" }
+            {
+              "file": "data/raw/2026-11-18/game-150036.json",
+              "pointer": "/deals/0/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-150036.json",
+              "pointer": "/deals/1/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-150036.json",
+              "pointer": "/cheapestPriceEver/date"
+            }
           ]
         },
         {
@@ -50,9 +80,18 @@
           "text": "ดีลที่ถูกที่สุดคือ GOG ราคา 59.99 ดอลลาร์ ... ราคาต่ำสุดที่เคยมีคือ 41.99 ดอลลาร์ ไม่ห่างจากตอนนี้มาก ... ตามสูตรแนะนำให้รอโปรรอบหน้า",
           "reason": "GOG กับ Steam ราคาเท่ากัน, ราคาต่ำสุดที่เคยมีต่ำกว่าราคาตอนนี้ 30% ไม่ใช่ 'ไม่ห่างมาก' และ 'โปรรอบหน้า' เป็นการคาดการณ์ที่ข้อมูลไม่ได้บอก",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/deals/0/price" },
-            { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/deals/1/price" },
-            { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/cheapestPriceEver/price" }
+            {
+              "file": "data/raw/2026-11-18/game-202278.json",
+              "pointer": "/deals/0/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202278.json",
+              "pointer": "/deals/1/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202278.json",
+              "pointer": "/cheapestPriceEver/price"
+            }
           ]
         }
       ]
@@ -73,9 +112,18 @@
           "status": "resolved",
           "detail": "summary_th ระบุว่า Humble Store, GOG และ Steam ราคาเท่ากันที่ 59.99 ในบรรดาร้านที่ CheapShark ติดตาม มี claim ราคา + storeID ครบทั้ง 3 แถว",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/0/storeID" },
-            { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/1/storeID" },
-            { "file": "data/raw/2026-11-18/game-202350.json", "pointer": "/deals/2/storeID" }
+            {
+              "file": "data/raw/2026-11-18/game-202350.json",
+              "pointer": "/deals/0/storeID"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202350.json",
+              "pointer": "/deals/1/storeID"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202350.json",
+              "pointer": "/deals/2/storeID"
+            }
           ]
         },
         {
@@ -83,7 +131,10 @@
           "status": "resolved",
           "detail": "เขียนว่ามีดีลเพียงร้านเดียวในบรรดาร้านที่ CheapShark ติดตาม และลบประโยค 'ควรรอโปร' ออก เหตุผลของ skip ตรงกับ score 33.24 < 40",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals/0/storeID" }
+            {
+              "file": "data/raw/2026-11-18/game-196149.json",
+              "pointer": "/deals/0/storeID"
+            }
           ]
         },
         {
@@ -91,9 +142,18 @@
           "status": "resolved",
           "detail": "ระบุว่า GOG และ Steam ราคาเท่ากันที่ 14.99 และแทน 'เก่ามาก' ด้วยวันที่ 2019-12-26 ซึ่งมี claim รองรับ (1577335021 = 2019-12-26T04:37:01Z = 2019-12-26 11:37 Asia/Bangkok เป็นวันเดียวกันทั้งสองเขตเวลา)",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/1/price" },
-            { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/cheapestPriceEver/date" },
-            { "file": "data/raw/2026-11-18/deal-150036.json", "pointer": "/cheapestPrice/date" }
+            {
+              "file": "data/raw/2026-11-18/game-150036.json",
+              "pointer": "/deals/1/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-150036.json",
+              "pointer": "/cheapestPriceEver/date"
+            },
+            {
+              "file": "data/raw/2026-11-18/deal-150036.json",
+              "pointer": "/cheapestPrice/date"
+            }
           ]
         },
         {
@@ -101,8 +161,14 @@
           "status": "resolved",
           "detail": "ระบุว่า GOG และ Steam ราคาเท่ากันที่ 59.99, ลบ 'รอโปรรอบหน้า' และเขียนว่าข้อมูลไม่ได้บอกว่าจะลดราคาเมื่อไร, แก้ 'ไม่ห่างมาก' เป็น 'ต่ำกว่าราคาตอนนี้อย่างชัดเจน' (41.99/59.99 = 0.70)",
           "evidence": [
-            { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/deals/1/price" },
-            { "file": "data/raw/2026-11-18/game-202278.json", "pointer": "/cheapestPriceEver/price" }
+            {
+              "file": "data/raw/2026-11-18/game-202278.json",
+              "pointer": "/deals/1/price"
+            },
+            {
+              "file": "data/raw/2026-11-18/game-202278.json",
+              "pointer": "/cheapestPriceEver/price"
+            }
           ]
         }
       ],
@@ -111,6 +177,99 @@
         "scripts/verify-claims.js ข้ามวันที่ในข้อความ วันที่ 2019-12-26 จึงตรวจด้วยมือ",
         "อัตราแลกเปลี่ยนเป็นของวันที่ 2026-11-17 (fx-usd-thb.json#/date) หน้าเว็บที่แสดงราคาบาทต้องแสดงวันที่นี้"
       ]
+    },
+    {
+      "round": 3,
+      "date": "2026-11-19",
+      "raw_day": "2026-11-19",
+      "brief_file": "data/brief.rejected-2.json",
+      "brief_file_note": "ไฟล์นี้ไม่ได้เก็บร่างที่ถูกตีกลับในรอบ 3: ตรวจในรอบ 4 แล้ว cmp data/brief.json data/brief.rejected-2.json = IDENTICAL (22572 ไบต์) และ brief.rejected-2.json สร้างเมื่อ 2026-11-19 02:03:47 +0700 หลัง brief.json ถูกแก้เมื่อ 01:56:50 +0700 จึงเป็นสำเนาของฉบับที่แก้แล้ว (ฉบับที่รอบ 4 ตรวจ) ข้อความที่ถูกตีกลับ (\"...35239 รีวิวในรอบก่อน) คะแนนตามสูตรจึงอยู่ในช่วง 'รอ' (wait) ยังไม่ถึงเกณฑ์ 'ซื้อ'\") ไม่อยู่ในไฟล์นี้ เหลือเพียงคำอ้างใน rejected[0].text ด้านล่างและ REVIEW.md R3-1 (ตั้งค่า brief_file นี้ตามคำสั่งผู้ใช้)",
+      "claims_total": 66,
+      "claims_accepted": 66,
+      "verdicts_ok": 5,
+      "verdict": "REJECTED",
+      "rejected": [
+        {
+          "game_id": "264418",
+          "field": "summary_th",
+          "text": "แต่รีวิว Steam อยู่ระดับปนกัน (58% จาก 35250 รีวิว เทียบกับ 35239 รีวิวในรอบก่อน) คะแนนตามสูตรจึงอยู่ในช่วง \"รอ\" (wait) ยังไม่ถึงเกณฑ์ \"ซื้อ\"",
+          "reason": "อ้างเหตุผลที่สูตรไม่รองรับ: F1 + F2 = 12.00 + 30.76 = 42.76 ต่อให้รีวิว 100% (F3 = 25) ก็ได้ 67.76 < 70 ยังเป็น wait รีวิว 58% จึงไม่ใช่เหตุที่ไม่ถึง buy เหตุคือส่วนลด 30.01% (ต้องราว 61.85% ขึ้นไปเมื่อค่าอื่นเท่าเดิม) รอบ 2 ACCEPT ประโยคเดียวกันนี้โดยพลาด",
+          "evidence": [
+            {
+              "file": "data/raw/2026-11-19/game-264418.json",
+              "pointer": "/deals/0/savings"
+            },
+            {
+              "file": "data/raw/2026-11-19/game-264418.json",
+              "pointer": "/deals/0/price"
+            },
+            {
+              "file": "data/raw/2026-11-19/game-264418.json",
+              "pointer": "/cheapestPriceEver/price"
+            },
+            {
+              "file": "data/raw/2026-11-19/deal-264418.json",
+              "pointer": "/gameInfo/steamRatingPercent"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "claim 50 ข้อชี้ไปที่ 2026-11-19 และ 16 ข้อชี้ไปที่ 2026-11-18 โดยตั้งใจ (ขึ้นต้นว่า \"รอบก่อน (2026-11-18)\" ใช้เทียบประวัติ) ยอมรับ",
+        "npm run verify: claims 66, matched 100%, issues 0 -> PASS แต่สคริปต์ตรวจเหตุผลที่อ้างถึงสูตรไม่ได้ ข้อที่ตีกลับมาจากการตรวจด้วยตนเอง",
+        "อัตราแลกเปลี่ยนรอบนี้เป็นของวันที่ 2026-11-18 (fx-usd-thb.json#/date) ค่า 33.975 ปัด 2 ตำแหน่ง = 33.98",
+        "สองรอบห่างกันราว 12 ชั่วโมง (_manifest.json#/started_at 2026-11-18T06:37Z กับ 2026-11-18T18:43Z) ไฟล์ game/lookup/stores เหมือนกันทุกไบต์",
+        "จำนวนรีวิว Hades ลดลง 1 (143406 -> 143405) ไม่กระทบสูตร",
+        "WRONG_CASES ทั้ง 2 เคสยังเป็นจริงบน 2026-11-19 คงไว้ และเปลี่ยน evidence เป็นไฟล์ 2026-11-19"
+      ],
+      "brief_file_lead_followup": "หลังรอบ 4 (Lead): สร้าง data/brief.rejected-2.json ใหม่จาก transcript จริงของ deal-analyst (Write ครั้งสุดท้ายในรันวันที่ 2 ก่อนรอบ 3) ตอนนี้ไฟล์นี้คือร่างที่รอบ 3 ตีกลับ มีประโยค \"...แต่รีวิว Steam อยู่ระดับปนกัน (58% ...) คะแนนตามสูตรจึงอยู่ในช่วง รอ\" และ 66 claim ตรงไฟล์ดิบ · สาเหตุเดิม: รันรอบ 4 ครั้งแรกที่ผู้ใช้หยุดกลางคันได้แก้ brief.json ไปก่อน (01:56) แล้ว Lead คัดลอกตอน 02:03"
+    },
+    {
+      "round": 4,
+      "date": "2026-11-19",
+      "raw_day": "2026-11-19",
+      "brief_file": "data/brief.json",
+      "claims_total": 66,
+      "claims_accepted": 66,
+      "verdicts_ok": 5,
+      "verdict": "ACCEPT",
+      "rejected": [],
+      "round3_results": [
+        {
+          "game_id": "264418",
+          "status": "resolved",
+          "detail": "summary_th ใหม่: ส่วนลดกับความใกล้ราคาต่ำสุดทำให้อยู่ในช่วง wait โดยไม่นับรีวิว (computeFactors rating 0: F1 12.00 + F2 30.76 = 42.76 >= 40), ส่วนลด 30.01% ไม่พอถึง buy แม้รีวิวเต็ม (rating 100: 67.76 < 70), รีวิว 58% ไม่เปลี่ยนผล (57.26, F3 ช่วง 0-25 ให้ 42.76-67.76 = wait ทั้งหมด) ทุกข้ออ้างตรงกับสูตร และไม่ได้ใส่คะแนนที่คำนวณเองลงในข้อความ",
+          "evidence": [
+            {
+              "file": "data/raw/2026-11-19/game-264418.json",
+              "pointer": "/deals/0/savings"
+            },
+            {
+              "file": "data/raw/2026-11-19/game-264418.json",
+              "pointer": "/deals/0/price"
+            },
+            {
+              "file": "data/raw/2026-11-19/game-264418.json",
+              "pointer": "/cheapestPriceEver/price"
+            },
+            {
+              "file": "data/raw/2026-11-19/deal-264418.json",
+              "pointer": "/gameInfo/steamRatingPercent"
+            },
+            {
+              "file": "data/raw/2026-11-19/deal-264418.json",
+              "pointer": "/gameInfo/steamRatingText"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "verify-claims.js data/brief.json: claims 66, matched 100%, issues 0 -> PASS; sha256 ของ 17 ไฟล์ใน data/raw/2026-11-19/ ตรงกับ _manifest.json",
+        "analyzeDay('2026-11-19'): 202350 skip 32.75, 196149 skip 33.24, 150036 skip 38.49, 202278 wait 48.50, 264418 wait 57.26 ตรงกับ verdict ใน brief ทั้ง 5",
+        "ตัวเลขทุกตัวใน summary_th ทั้ง 5 เกมมี claim รองรับ ยกเว้น 2077 และ 3 ซึ่งเป็นชื่อเกม (/info/title); ข้ออ้างเชิงเหตุผลของ 202350, 196149, 150036, 202278 ตรวจด้วยคะแนนสูงสุดที่เป็นไปได้แล้วถูกต้อง",
+        "data/brief.rejected-2.json เหมือน data/brief.json ทุกไบต์ (cmp IDENTICAL) จึงไม่ได้เก็บร่างที่ถูกตีกลับในรอบ 3 ดู rounds[2].brief_file_note และ REVIEW.md R4.5",
+        "ปัญหาข้อมูลดิบ D1-D6 (REVIEW.md R3.4) ยังอยู่ ไม่พบปัญหาใหม่; WRONG_CASES ทั้ง 2 เคสยังเป็นจริง ไม่ได้แก้ WRONG_CASES.md"
+      ]
     }
   ],
   "wrong_cases": [
@@ -118,26 +277,60 @@
       "game_id": "150036",
       "formula_verdict": "skip",
       "should_be": "wait",
-      "reason": "score 38.49 ถูกกดด้วยราคาต่ำสุด 5.99 จากโปรเมื่อ 2019-12-26 (เกือบ 7 ปีก่อน) ทั้งที่รีวิวบวก 98% จาก 397481 รีวิว F2 ไม่สนใจอายุของราคาต่ำสุด และสูตรเอา 'ดีลตอนนี้ไม่ดี' ไปปนกับ 'เกมไม่น่าซื้อ' ขณะที่ Cities: Skylines II รีวิว 58% ได้ wait",
+      "reason": "score 38.49 (2026-11-19 เท่ากับ 2026-11-18) ถูกกดด้วยราคาต่ำสุด 5.99 จากโปรเมื่อ 2019-12-26 (เกือบ 7 ปีก่อน) ทั้งที่รีวิวบวก 98% จาก 397486 รีวิว F2 ไม่สนใจอายุของราคาต่ำสุด และสูตรเอา \"ดีลตอนนี้ไม่ดี\" ไปปนกับ \"เกมไม่น่าซื้อ\" ขณะที่ Cities: Skylines II รีวิว 58% ได้ wait 57.26",
       "evidence": [
-        { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/deals/0/price" },
-        { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/cheapestPriceEver/price" },
-        { "file": "data/raw/2026-11-18/game-150036.json", "pointer": "/cheapestPriceEver/date" },
-        { "file": "data/raw/2026-11-18/deal-150036.json", "pointer": "/gameInfo/steamRatingPercent" },
-        { "file": "data/raw/2026-11-18/deal-150036.json", "pointer": "/gameInfo/steamRatingCount" }
+        {
+          "file": "data/raw/2026-11-19/game-150036.json",
+          "pointer": "/deals/0/price"
+        },
+        {
+          "file": "data/raw/2026-11-19/game-150036.json",
+          "pointer": "/cheapestPriceEver/price"
+        },
+        {
+          "file": "data/raw/2026-11-19/game-150036.json",
+          "pointer": "/cheapestPriceEver/date"
+        },
+        {
+          "file": "data/raw/2026-11-19/deal-150036.json",
+          "pointer": "/gameInfo/steamRatingPercent"
+        },
+        {
+          "file": "data/raw/2026-11-19/deal-150036.json",
+          "pointer": "/gameInfo/steamRatingCount"
+        },
+        {
+          "file": "data/raw/2026-11-19/deal-264418.json",
+          "pointer": "/gameInfo/steamRatingPercent"
+        }
       ]
     },
     {
       "game_id": "196149",
       "formula_verdict": "skip",
       "should_be": "wait",
-      "reason": "เคยลดถึง 6.24 (ต่ำกว่าราคาตอนนี้ 24.99 อยู่ 75%) เมื่อไม่นาน เหตุผลของ F2 ใน METRICS.md คือ 'ถ้าเคยถูกกว่านี้มากก็ควรรอ' แต่ F2 ต่ำกลับดันคะแนนไปทาง skip (33.24) แทน wait เกมรีวิว 98% จึงได้ 'ไม่ซื้อ'",
+      "reason": "เคยลดถึง 6.24 (ต่ำกว่าราคาตอนนี้ 24.99 อยู่ 75%) เมื่อ 2025-09-17 (games) หรือ 2026-09-25 (deals) เหตุผลของ F2 ใน METRICS.md คือ \"ถ้าเคยถูกกว่านี้มากก็ควรรอ\" แต่ F2 ต่ำกลับดันคะแนนไปทาง skip (33.24 ทั้ง 2026-11-18 และ 2026-11-19) แทน wait เกมรีวิว 98% จึงได้ \"ไม่ซื้อ\"",
       "evidence": [
-        { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/deals/0/price" },
-        { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/cheapestPriceEver/price" },
-        { "file": "data/raw/2026-11-18/game-196149.json", "pointer": "/cheapestPriceEver/date" },
-        { "file": "data/raw/2026-11-18/deal-196149.json", "pointer": "/cheapestPrice/date" },
-        { "file": "data/raw/2026-11-18/deal-196149.json", "pointer": "/gameInfo/steamRatingPercent" }
+        {
+          "file": "data/raw/2026-11-19/game-196149.json",
+          "pointer": "/deals/0/price"
+        },
+        {
+          "file": "data/raw/2026-11-19/game-196149.json",
+          "pointer": "/cheapestPriceEver/price"
+        },
+        {
+          "file": "data/raw/2026-11-19/game-196149.json",
+          "pointer": "/cheapestPriceEver/date"
+        },
+        {
+          "file": "data/raw/2026-11-19/deal-196149.json",
+          "pointer": "/cheapestPrice/date"
+        },
+        {
+          "file": "data/raw/2026-11-19/deal-196149.json",
+          "pointer": "/gameInfo/steamRatingPercent"
+        }
       ]
     }
   ]
