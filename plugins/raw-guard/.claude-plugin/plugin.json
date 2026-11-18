@@ -1,0 +1,7 @@
+{
+  "name": "raw-guard",
+  "version": "0.1.0",
+  "description": "PreToolUse guard for INBLACK Project B: blocks any edit, overwrite or delete of collected raw API data in data/raw/ (only scripts/fetch-raw.js may write there).",
+  "author": { "name": "inblack-b" },
+  "hooks": "./hooks/hooks.json"
+}

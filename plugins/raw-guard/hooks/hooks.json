@@ -1,0 +1,13 @@
+{
+  "description": "Block edits to data/raw/ (raw API evidence is immutable)",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell",
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/guard-raw.js\"", "timeout": 20 }
+        ]
+      }
+    ]
+  }
+}

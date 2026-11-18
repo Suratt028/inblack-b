@@ -18,7 +18,8 @@ description: Verify game-deal claims against the raw CheapShark/Frankfurter file
    ```bash
    node -e "const {getPointer}=require('./scripts/lib/pointer');const d=require('./data/raw/<วัน>/<ไฟล์>.json');console.log(getPointer(d,'<pointer>'))"
    ```
-   หรือเรียก MCP tool `explain_verdict` / `compare_game_prices` ซึ่งคืนค่าพร้อม file + pointer
+   (`getPointer` คืน `{ found, value }` — `found: false` = pointer ไม่มีอยู่จริง ต้องตีกลับ)
+   หรือเรียก MCP tool `explain_verdict` / `compare_game_prices` (server `inblack-deals`, เปิดด้วย `npm run mcp`) ซึ่งคืนค่าพร้อม file + pointer
 3. **ตีกลับ (REJECT)** เมื่อ:
    - ไม่มี `source.file` / `source.pointer` หรือไฟล์ไม่ได้อยู่ใต้ `data/raw/`
    - ค่าที่ pointer ไม่ใช่ตัวเลข หรือไม่เท่ากับ `value` เมื่อปัด 2 ตำแหน่ง
@@ -26,4 +27,4 @@ description: Verify game-deal claims against the raw CheapShark/Frankfurter file
    - ข้อความตีความเกินข้อมูล (เช่น "ถูกที่สุดในตลาด" แต่ข้อมูลมีแค่ร้านที่ CheapShark ติดตาม, "ราคาจะลดอีก" ซึ่งข้อมูลไม่ได้บอก)
    - ตัวเลขที่คำนวณเอง (ราคาบาท, คะแนนรวม) ถูกใส่เป็น claim ราวกับเป็นค่าดิบ
    - verdict ไม่ตรงกับสูตร `METRICS.md`
-4. **รายงาน** เป็นตาราง: claim, value, file#pointer, ค่าจริง, ACCEPT/REJECT, เหตุผล และสรุป `matched X/Y (Z%)` · ห้ามแก้ `data/raw/**` เพื่อให้ตัวเลขตรง
+4. **รายงาน** เป็นตาราง (นับจำนวนที่ตีกลับต่อข้อความ — 1 `summary_th` หรือ 1 claim = 1 ข้อ): claim, value, file#pointer, ค่าจริง, ACCEPT/REJECT, เหตุผล และสรุป `matched X/Y (Z%)` · ห้ามแก้ `data/raw/**` เพื่อให้ตัวเลขตรง

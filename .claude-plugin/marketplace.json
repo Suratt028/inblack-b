@@ -1,0 +1,11 @@
+{
+  "name": "inblack-b",
+  "owner": { "name": "inblack-b" },
+  "plugins": [
+    {
+      "name": "raw-guard",
+      "source": "./plugins/raw-guard",
+      "description": "PreToolUse hook: blocks edits, overwrites and deletes of raw API data in data/raw/."
+    }
+  ]
+}

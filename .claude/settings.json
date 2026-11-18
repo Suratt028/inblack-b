@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Bash(git push --force:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledPlugins": {
+    "raw-guard@inblack-b": true
+  },
+  "extraKnownMarketplaces": {
+    "inblack-b": {
+      "source": {
+        "source": "directory",
+        "path": "./"
+      }
+    }
+  }
+}
