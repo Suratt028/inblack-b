@@ -41,15 +41,28 @@ function redact(cmd, root) {
     .replace(/\/(home|Users)\/[^/\s"']+/g, '~');
 }
 
+// The repo whose data/raw/ this hook protects (and whose AGENT_LOG/ it writes to): the repo that contains this plugin
+// (plugins/raw-guard/hooks/ → repo root). Not CLAUDE_PROJECT_DIR: a session started in another project (it happened:
+// a session started in inblack-a) would otherwise log blocks into that project and check paths against its data/raw.
+// RAW_GUARD_ROOT overrides it (tests only).
+function guardRoot(input) {
+  if (process.env.RAW_GUARD_ROOT) return process.env.RAW_GUARD_ROOT;
+  const pluginRepo = path.resolve(__dirname, '..', '..', '..');
+  if (fs.existsSync(path.join(pluginRepo, 'data', 'raw'))) return pluginRepo;
+  return process.env.CLAUDE_PROJECT_DIR || (input && input.cwd) || process.cwd();
+}
+
 // Returns a reason string when the call must be blocked, else null.
+// Relative file paths are resolved against the tool call's own cwd (input.cwd), then compared with root/data/raw.
 function decide(input, root) {
   const tool = input && input.tool_name;
   const ti = (input && input.tool_input) || {};
   if (FILE_TOOLS.has(tool)) {
     const p = ti.file_path || ti.notebook_path;
     if (typeof p !== 'string') return null;
-    const rel = path.relative(path.join(root, 'data', 'raw'), path.resolve(root, p));
-    const shown = path.relative(root, path.resolve(root, p)).split(path.sep).join('/'); // never log absolute local paths
+    const abs = path.resolve((input && input.cwd) || root, p);
+    const rel = path.relative(path.join(root, 'data', 'raw'), abs);
+    const shown = redact(path.relative(root, abs).split(path.sep).join('/'), root); // never log absolute local paths
     if (rel === '' || (!rel.startsWith('..') && !path.isAbsolute(rel))) return `${tool} on ${shown}: data/raw/ is immutable raw API evidence`;
     return null;
   }
@@ -65,7 +78,7 @@ function decide(input, root) {
 function main() {
   let input = {};
   try { input = JSON.parse(fs.readFileSync(0, 'utf8') || '{}'); } catch { process.exit(0); }
-  const root = process.env.CLAUDE_PROJECT_DIR || input.cwd || process.cwd();
+  const root = guardRoot(input);
   const reason = decide(input, root);
   if (!reason) process.exit(0);
   const msg = `Blocked by raw-guard: ${reason}. Raw data may only be written by \`npm run fetch\`. If a number looks wrong, report it as problem data instead of changing the evidence.`;
@@ -82,4 +95,4 @@ function main() {
 }
 
 if (require.main === module) main();
-module.exports = { decide, redact };
+module.exports = { decide, redact, guardRoot };

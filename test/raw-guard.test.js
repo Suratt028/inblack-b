@@ -94,12 +94,29 @@ test('hook process: exit 2 with reason on stderr when blocked, exit 0 otherwise'
   const fs = require('fs');
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'guard-'));
   try {
-    const env = { ...process.env, CLAUDE_PROJECT_DIR: tmp };
-    const blocked = spawnSync(process.execPath, [hook], { input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: 'data/raw/d/x.json' }, session_id: 't' }), env, encoding: 'utf8' });
+    const env = { ...process.env, RAW_GUARD_ROOT: tmp };
+    const blocked = spawnSync(process.execPath, [hook], { input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: 'data/raw/d/x.json' }, cwd: tmp, session_id: 't' }), env, encoding: 'utf8' });
     assert.equal(blocked.status, 2);
     assert.match(blocked.stderr, /Blocked by raw-guard/);
     assert.match(fs.readFileSync(path.join(tmp, 'AGENT_LOG', 'hook-events.md'), 'utf8'), /Write blocked by raw-guard/);
-    const ok = spawnSync(process.execPath, [hook], { input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: 'site/x.html' } }), env, encoding: 'utf8' });
+    const ok = spawnSync(process.execPath, [hook], { input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: 'site/x.html' }, cwd: tmp }), env, encoding: 'utf8' });
     assert.equal(ok.status, 0);
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+});
+
+test('session started in another project: root is still this repo, absolute writes into its data/raw are blocked', () => {
+  const { guardRoot } = require('../plugins/raw-guard/hooks/guard-raw');
+  const saved = { p: process.env.CLAUDE_PROJECT_DIR, r: process.env.RAW_GUARD_ROOT };
+  try {
+    delete process.env.RAW_GUARD_ROOT;
+    process.env.CLAUDE_PROJECT_DIR = path.join(ROOT, '..', 'some-other-project');
+    assert.equal(guardRoot({ cwd: process.env.CLAUDE_PROJECT_DIR }), ROOT);
+  } finally {
+    if (saved.p === undefined) delete process.env.CLAUDE_PROJECT_DIR; else process.env.CLAUDE_PROJECT_DIR = saved.p;
+    if (saved.r !== undefined) process.env.RAW_GUARD_ROOT = saved.r;
+  }
+  const other = path.join(ROOT, '..', 'some-other-project');
+  const r = decide({ tool_name: 'Write', tool_input: { file_path: path.join(ROOT, 'data', 'raw', 'd', 'x.json') }, cwd: other }, ROOT);
+  assert.match(r, /Write on data\/raw\/d\/x\.json/);
+  assert.equal(decide({ tool_name: 'Write', tool_input: { file_path: 'data/raw/x.json' }, cwd: other }, ROOT), null, 'other project\'s own data/raw is not ours');
 });
